@@ -2,7 +2,7 @@
     </div>
 
     <script src="<?=base_url('assets/js/bootstrap.min.js')?>"></script>
-    <!-- <script>
+    <script>
 	$(function () {
 		$('[data-toggle="tooltip"]').tooltip();
 		$('[data-toggle="popover"]').popover({html:true});
@@ -19,6 +19,6 @@
 			event.stopPropagation();
 		});
 	})
-	</script> -->
+	</script>
 </body>
 </html>

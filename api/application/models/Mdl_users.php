@@ -536,13 +536,20 @@ class mdl_users extends CI_Model {
 		
 		return ($query->num_rows()) ? $query->row()->id : false;
 	}
-	
-	
-	
-	
-	
-	
-	
+
+    public function getUsersLookup($company = null)
+    {
+        $query = $this->db->select("id, cid, CONCAT(first_name, ' ', last_name) AS name")
+            ->from('users')
+            ->where('active', 1);
+
+        if ($company) {
+            $query->where('company', $company);
+        }
+
+        return $query->get()->result_array();
+	}
+
 	private function token($uid)
 	{
 		return sha1(rand(10000,1000000).time().$uid);

@@ -1,0 +1,4 @@
+.idea
+docs/*
+api/error_log
+api/php_error_log

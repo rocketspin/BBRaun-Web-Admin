@@ -6,14 +6,14 @@ class Mdl_observation extends CI_Model {
         // Call the Model constructor
         parent::__construct();
     }
-	
+
 	public function __api_saveobservation($data, $uid)
 	{
 		$data 		= json_decode(json_encode($data));
 		$location 	= $data->location;
 		$healthcare = $data->healthWorker;
 		$moment 	= $data->moment;
-		
+
 		$moment->stepOne 	= $data->stepOne;
 		$moment->stepTwo 	= $data->stepTwo;
 		$moment->maskType 	= $data->maskType;
@@ -22,8 +22,8 @@ class Mdl_observation extends CI_Model {
 		$moment->glove 		= isset($data->gloveCompliance) ? $data->gloveCompliance : '';
 		$moment->gown 		= isset($data->gownCompliance) ? $data->gownCompliance : '';
 		$moment->mask 		= isset($data->maskCompliance) ? $data->maskCompliance : '';
-		
-		
+
+
 		if(empty($uid))
 		{
 			$result = array( 'status' => 0, 'errortype' => 'error', 'message' => 'User ID is required.', 'result' => '');
@@ -73,7 +73,7 @@ class Mdl_observation extends CI_Model {
 			$result = array( 'status' => 1, 'errortype' => 'warning', 'message' => 'This observation already saved to server.', 'result' => 'resend');
 		}
 		else
-		{	
+		{
 			if(!isset($moment->stepTwo) || $moment->stepTwo == 'NA')
 			{
 				$glove 				= 'NA';
@@ -84,12 +84,12 @@ class Mdl_observation extends CI_Model {
 			else
 			{
 				$prefix = ($moment->type == 'Before Contact' || $moment->type == 'Before Procedure') ? 'Don on' : 'Remove';
-				
+
 				$glove 	= (isset($moment->glove) && $moment->glove) ? 	$prefix.' glove / Yes' 	: $prefix.' glove / No';
 				$gown 	= (isset($moment->gown) && $moment->gown) ? 	$prefix.' gown / Yes' 	: $prefix.' gown / No';
 				$mask 	= (isset($moment->mask) && $moment->mask) ? 	$prefix.' mask / Yes' 	: $prefix.' mask / No';
 			}
-			
+
 			if($moment->type == 'After Environment')
 			{
 				$glove 				= 'NA';
@@ -98,15 +98,15 @@ class Mdl_observation extends CI_Model {
 				$moment->maskType 	= 'NA';
 				$moment->stepTwo	= 'NA';
 			}
-			
-			$healthcare->type 		= ($healthcare->type == 'Others' && isset($healthcare->otherType) &&  $healthcare->otherType != '') ? 				$healthcare->otherType : 		$healthcare->type; 
-			$location->levelTwo 	= ($location->levelTwo == 'Others' && isset($location->levelTwoOther) &&  $location->levelTwoOther != '') ? 		$location->levelTwoOther : 		$location->levelTwo; 
-			$location->levelThree 	= ($location->levelThree == 'Others' && isset($location->levelThreeOther) &&  $location->levelThreeOther != '') ? 	$location->levelThreeOther : 	$location->levelThree; 
-			$location->levelFour 	= ($location->levelFour == 'Others' && isset($location->levelFourOther) &&  $location->levelFourOther != '') ? 		$location->levelFourOther : 	$location->levelFour; 
-			
-			
+
+			$healthcare->type 		= ($healthcare->type == 'Others' && isset($healthcare->otherType) &&  $healthcare->otherType != '') ? 				$healthcare->otherType : 		$healthcare->type;
+			$location->levelTwo 	= ($location->levelTwo == 'Others' && isset($location->levelTwoOther) &&  $location->levelTwoOther != '') ? 		$location->levelTwoOther : 		$location->levelTwo;
+			$location->levelThree 	= ($location->levelThree == 'Others' && isset($location->levelThreeOther) &&  $location->levelThreeOther != '') ? 	$location->levelThreeOther : 	$location->levelThree;
+			$location->levelFour 	= ($location->levelFour == 'Others' && isset($location->levelFourOther) &&  $location->levelFourOther != '') ? 		$location->levelFourOther : 	$location->levelFour;
+
+
 			$user = $this->Mdl_users->get_user($uid);
-			
+
 			$this->db->insert('observations', array(
 				'uid' 					=> $uid,
 				'cid'					=> $user->cid,
@@ -128,24 +128,24 @@ class Mdl_observation extends CI_Model {
 				'mask_type'				=> isset($moment->maskType) ? $moment->maskType : 'NA',
 				'date_registered'		=> date('Y-m-d H:i:s', strtotime($moment->dateTime))
 			));
-			
+
 			if($this->db->affected_rows())
 			{
 				$this->load->model('Mdl_users');
-				
+
 				$user = $this->Mdl_users->get_user($uid);
 				$this->db->where('cid', $user->cid);
 				$this->db->from('observations');
 				$stats['companyRecords'] = $this->db->count_all_results();
-				
+
 				$this->db->where('uid', $uid);
 				$this->db->from('observations');
 				$stats['accountRecords'] = $this->db->count_all_results();
-				
+
 				$s_uid = $this->ion_auth->get_users_groups($uid)->row()->id != 1 ? $uid : '';
-				
+
 				$stats['momentRecords'] = $this->api_countobservation($user->cid, $s_uid);
-				
+
 				$result = array( 'status' => 1, 'errortype' => 'success', 'message' => 'New observation successfully save to server.', 'result' => $stats);
 			}
 			else
@@ -153,15 +153,15 @@ class Mdl_observation extends CI_Model {
 				$result = array( 'status' => 0, 'errortype' => 'error', 'message' => 'Server Error.', 'result' => '');
 			}
 		}
-		
+
 		return $result;
 	}
-	
+
 	public function api_saveobservation($data, $uid)
 	{
 		$data = json_decode(json_encode($data));
 		$user = $this->ion_auth->user($uid)->row();
-		
+
 		if(empty($data))
 		{
 			$result = array( 'status' => 0, 'errortype' => 'error', 'message' => 'No data submitted.', 'result' => '');
@@ -203,7 +203,7 @@ class Mdl_observation extends CI_Model {
 			$result = array( 'status' => 1, 'errortype' => 'warning', 'message' => 'This observation already saved to server.', 'result' => 'resend');
 		}
 		else
-		{	
+		{
 			if(!isset($data->hh_compliance_type) || $data->hh_compliance_type == 'NA')
 			{
 				$data->glove_compliance = $data->gown_compliance = $data->mask_compliance = $data->mask_type = 'NA';
@@ -217,7 +217,7 @@ class Mdl_observation extends CI_Model {
 				$data->mask_compliance 	= (isset($data->mask_compliance) && $data->mask_compliance) ? 	$prefix.' mask / Yes' 	: $prefix.' mask / No';
 				$data->mask_type		= ($data->mask_compliance == 'Don on mask / Yes' || $data->mask_compliance == 'Remove mask / Yes') ? $data->mask_type : 'NA';
 			}
-			
+
 			$this->db->insert('observations', array(
 				'uid' 					=> $data->uid,
 				'cid'					=> $data->cid,
@@ -239,18 +239,18 @@ class Mdl_observation extends CI_Model {
 				'mask_type'				=> $data->mask_type,
 				'date_registered'		=> date('Y-m-d H:i:s', strtotime($data->date_registered))
 			));
-			
+
 			if($this->db->affected_rows())
 			{
 				$this->db->where('cid', $user->cid);
 				$this->db->from('observations');
 				$stats['companyRecords'] = $this->db->count_all_results();
-				
+
 				$this->db->where('uid', $uid);
 				$this->db->from('observations');
 				$stats['accountRecords'] = $this->db->count_all_results();
 				$stats['momentRecords'] = $this->api_countobservation($user->cid, $uid);
-				
+
 				$result = array( 'status' => 1, 'errortype' => 'success', 'message' => 'New observation successfully save to server.', 'result' => $stats);
 			}
 			else
@@ -258,71 +258,71 @@ class Mdl_observation extends CI_Model {
 				$result = array( 'status' => 0, 'errortype' => 'error', 'message' => 'Server Error.', 'result' => '');
 			}
 		}
-		
+
 		return $result;
 	}
-	
-	
+
+
 	public function api_multiobservesend($data, $uid)
 	{
 		$data 	= json_decode(json_encode($data));
 		$user 	= $this->ion_auth->user($uid)->row();
 		$stats	= array();
 		$this->db->insert('observations', $data);
-		
+
 		if($this->db->affected_rows())
 		{
 			$this->db->where('cid', $user->cid);
 			$this->db->from('observations');
 			$stats['companyRecords'] = $this->db->count_all_results();
-			
+
 			$this->db->where('uid', $uid);
 			$this->db->from('observations');
 			$stats['accountRecords'] 	= $this->db->count_all_results();
 			$stats['momentRecords'] 	= $this->api_countobservation($user->cid, $uid);
-			
+
 			return array( 'status' => 1, 'errortype' => 'success', 'message' => 'New observation successfully save to server.', 'result' => $stats);
 		}
 		else
 			return array( 'status' => 0, 'errortype' => 'error', 'message' => 'Server Error.', 'result' => '');
 	}
-	
+
 	public function api_countobservation($cid, $uid = '')
 	{
 		$user 		= $this->ion_auth->user($uid)->row();
 		$date_from 	= strtotime($this->input->get('dateFrom'));
 		$date_to 	= strtotime($this->input->get('dateTo'));
 		$group_id	= $this->ion_auth->get_users_groups($uid)->row()->id;
-		
+
 		if($this->input->get('department') > 0) 	$this->db->where('location_level1', $this->input->get('department'));
 		if($this->input->get('subDepartment') > 0) 	$this->db->where('location_level2', $this->input->get('subDepartment'));
 		if($this->input->get('ward') > 0) 			$this->db->where('location_level3', $this->input->get('ward'));
 		if($this->input->get('patient') > 0) 		$this->db->where('location_level4', $this->input->get('patient'));
 		if($this->input->get('healthcare') > 0) 	$this->db->where('hcw_title', $this->input->get('healthcare'));
-		
+
 		if($this->input->get('dateFrom') != '')
 			$this->db->where('observations.date_registered >=',date('Y-m-d 00:00:00',$date_from));
-			
+
 		if($this->input->get('dateTo') != '')
 			$this->db->where('observations.date_registered <=',date('Y-m-d 23:59:59',$date_to));
-				
+
 		if($group_id == 2)
 			$this->db->where('uid', $uid);
-		
-		if($this->input->get('auditor') != '')	
+
+		if($this->input->get('auditor') != '')
 			$this->db->where('uid', $this->input->get('auditor'));
-		
+
 		$this->db->where('cid', $cid);
 		$this->db->select('moment1, moment2, moment3, moment4, moment5, hh_compliance');
 		$query = $this->db->get('observations');
-		
+
 		$passedFailed 	= array('passed' => 0, 'failed' => 0);
 		$momentRecords 	= array( 1 => $passedFailed, 2 => $passedFailed, 3 => $passedFailed, 4 => $passedFailed, 5 => $passedFailed);
-		
+
 		foreach($query->result() as $data)
 		{
 			for($x = 1; $x <=5; $x++){
-				$moment = 'moment'.$x; 
+				$moment = 'moment'.$x;
 				if($data->$moment == $x)
 				{
 					if($data->hh_compliance == 'missed')
@@ -334,7 +334,7 @@ class Mdl_observation extends CI_Model {
 		}
 		return $momentRecords;
 	}
-	
+
 	public function validate_resend($id)
 	{
 		$this->db->where('resend_id',$id);
@@ -342,7 +342,7 @@ class Mdl_observation extends CI_Model {
 		$this->db->from('observations');
 		return $this->db->count_all_results();
 	}
-	
+
 	public function api_getobservation($uid, $type)
 	{
 		$data 		= array();
@@ -350,34 +350,34 @@ class Mdl_observation extends CI_Model {
 		$date_from 	= strtotime($this->input->get('dateFrom'));
 		$date_to 	= strtotime($this->input->get('dateTo'));
 		$locations	= $this->get_all_locations($user->cid);
-		
+
 		if($this->input->get('department') > 0) 	$this->db->where('location_level1', $this->input->get('department'));
 		if($this->input->get('subDepartment') > 0) 	$this->db->where('location_level2', $this->input->get('subDepartment'));
 		if($this->input->get('ward') > 0) 			$this->db->where('location_level3', $this->input->get('ward'));
 		if($this->input->get('patient') > 0) 		$this->db->where('location_level4', $this->input->get('patient'));
 		if($this->input->get('healthcare') > 0) 	$this->db->where('hcw_title', $this->input->get('healthcare'));
-		
+
 		if($this->input->get('dateFrom') != '')
 			$this->db->where('observations.date_registered >=',date('Y-m-d 00:00:00',$date_from));
-			
+
 		if($this->input->get('dateTo') != '')
 			$this->db->where('observations.date_registered <=',date('Y-m-d 23:59:59',$date_to));
-		
-		if($this->input->get('auditor') != '')	
+
+		if($this->input->get('auditor') != '')
 			$this->db->where('uid', $this->input->get('auditor'));
 		else {
 				$this->db->where('observations.cid', $user->cid);
 
 		}
 
-		// if($type == 'user')			
+		// if($type == 'user')
 		// 	$this->db->where('uid', $uid);
 
 		$this->db->join('users as u1', 'observations.uid = u1.id');
-		
+
 		$this->db->select("
 			CONCAT(u1.first_name,' ',u1.last_name) AS full_name,
-			observations.*, 
+			observations.*,
 			DATE_FORMAT(observations.date_registered, '%b %d, %Y') AS date_registered,
 			DATE_FORMAT(observations.date_registered, '%b %d, %Y %h:%i %p') AS datetime,
 		",FALSE);
@@ -389,31 +389,31 @@ class Mdl_observation extends CI_Model {
 			$x = 0;
 			$date = '';
 			foreach($query->result() as $row)
-			{		
+			{
 				$return_data[$x] 					= $row;
 				$return_data[$x]->hcw_title 		= $locations[$row->hcw_title]['name'];
 				$return_data[$x]->location_level1 	= $locations[$row->location_level1]['name'];
 				$return_data[$x]->location_level2 	= $locations[$row->location_level2]['name'];
 				$return_data[$x]->location_level3 	= $locations[$row->location_level3]['name'];
 				$return_data[$x]->location_level4 	= $locations[$row->location_level4]['name'];
-				
+
 				if($date != $row->date_registered)
 				{
 					$return_data[$x]->header_date 	= date('M j, Y',strtotime($row->date_registered));
 					$date							= $row->date_registered;
 				}else
 					$return_data[$x]->header_date = '';
-					
+
 				$x++;
 			}
-			
+
 			$data['data'] 			= $return_data;
 			$data['date']['from'] 	= date('M j, Y', $date_from);
 			$data['date']['to'] 	= date('M j, Y', $date_to);
-			
+
 			if($this->input->get('download'))
 			{
-				return $this->api_sendmailreports($return_data, $uid, $this->input->get('download'));				
+				return $this->api_sendmailreports($return_data, $uid, $this->input->get('download'));
 			}
 		}
 		else
@@ -422,24 +422,24 @@ class Mdl_observation extends CI_Model {
 			$data['date']['from'] 	= date('M j, Y', $date_from);
 			$data['date']['to'] 	= date('M j, Y', $date_to);
 		}
-		
+
 		return array( 'status' => 1, 'errortype' => 'success', 'message' => '', 'result' => $data);
 	}
-	
-	
+
+
 	public function get_all_locations($cid)
 	{
 		$this->db->where(array('cid' => $cid));
 		$query = $this->db->get('locations');
-		
+
 		foreach($query->result() as $loc)
 		{
 			$result[$loc->id] = array('name' => $loc->name, 'id' => $loc->id);
 		}
-		
+
 		return $result;
 	}
-	
+
 	public function api_sendmailreports($data, $uid, $type)
 	{
 		if(count($data) == 0)
@@ -457,44 +457,44 @@ class Mdl_observation extends CI_Model {
 				'smtp_timeout' => '4',
 				'mailtype'  => 'html',
 			));
-			
+
 			if($type == 1 || $type == 3) $pdf 	= $this->api_pdfreports($data);
 			if($type == 2 || $type == 3) $excel = $this->api_excelreports($data);
-				
+
 			$user = $this->ion_auth->user($uid)->row();
-			
+
 			$this->email->set_newline("\r\n");
 			$this->email->from($this->site->info('support_email'), $this->site->info('business_title'));
 			$this->email->to($user->email);
 			$this->email->subject('Hand hygiene observations reports '.date('m/d/Y'));
 			$this->email->message('Hand hygiene report');
-	
+
 			if(isset($pdf)) 	$this->email->attach($pdf);
 			if(isset($excel)) 	$this->email->attach($excel);
 
 			$this->email->send();
-	
+
 			if(isset($pdf) && file_exists($pdf)) 		unlink($pdf);
 			if(isset($excel) && file_exists($excel)) 	unlink($excel);
-			
+
 			$result = array( 'status' => 1, 'errortype' => 'success', 'message' => 'Report successfully sent, please check your email address.', 'result' => '');
 		}
-		
+
 		return $result;
 	}
-	
+
 	public function api_pdfreports($data)
 	{
 		return $this->api_excelreports($data);
 		// if(count($data) == 0) return false;
-		
+
 		// $data_array 	= json_decode(json_encode($data));
 		// $param['data'] 	= $data_array;
 		// $date_from 	= date('m-d-Y', strtotime($this->input->get('dateFrom')));
 		// $date_to 	= date('m-d-Y', strtotime($this->input->get('dateTo')));
-		
+
 		// $html = $this->load->view('report-table', $param, TRUE);
-			
+
 		// $this->load->library('Pdf');
 		// $pdf = new Pdf('L', 'cm', 'REPORT', true, 'UTF-8', true);
 		// $pdf->SetCreator(PDF_CREATOR);
@@ -504,18 +504,18 @@ class Mdl_observation extends CI_Model {
 		// $pdf->setPrintFooter(false);
 		// $pdf->SetFontSize(10);
 		// $pdf->AddPage('L', 'REPORT');
-	
+
 		// $pdf->writeHTML($html, true, false, true, false, '');
 		// $file = FCPATH.'assets/uploads/HHAT_COMPLIANCE_DATA_'.rand(1000,9999).'_'.$date_from.' to '.$date_to.'.pdf';
 		// $pdf->Output($file, 'F');
-		
+
 		// return $file;
 	}
-	
+
 	public function api_excelreports($data)
 	{
 		if(count($data) == 0) return false;
-		
+
 		$arr_HcwType = array();
 		$arr_Ward = array();
 		$arr_Department = array();
@@ -523,29 +523,29 @@ class Mdl_observation extends CI_Model {
 		$arr_Service = array();
 		$arr_Indication = array();
 
-		//Header	
+		//Header
 		$contents['A1'] = '';
 		$contents['B1'] = '';
 		$contents['D1'] = 'LOCATION LEVEL';
-		
+
 		$contents['H1'] = 'HEALTHCARE WORKER';
-		
+
 		$contents['I1'] = '';
 		$contents['J1'] = 'HAND HYGIENE COMPLIANCE';
 		$contents['K1'] = '';
 		$contents['L1'] = '';
 		$contents['M1'] = '';
 		$contents['N1'] = '';
-		
+
 		$contents['O1'] = '';
 		$contents['P1'] = '';
 		$contents['Q1'] = 'Occupational';
-		
+
 
 		$contents['A2'] = 'Date & Time';
 		$contents['B2'] = 'Auditor';
 		//$contents['C2'] = 'Branch';
-		
+
 		$contents['D2'] = '1';
 		$contents['E2'] = '2';
 		$contents['F2'] = '3';
@@ -554,27 +554,27 @@ class Mdl_observation extends CI_Model {
 		// $contents['E2'] = 'Department';
 		// $contents['F2'] = 'Ward';
 		// $contents['G2'] = 'Service';
-		
+
 		$contents['H2'] = 'Title';
 		$contents['I2'] = 'Name';
-		
+
 		$contents['J2'] = 'Moment';
-		
-		$contents['K2'] = '';		
+
+		$contents['K2'] = '';
 		$contents['L2'] = '';
 		$contents['M2'] = '';
 		$contents['N2'] = '';
-		
+
 		$contents['O2'] = 'Action';
 		$contents['P2'] = 'Result';
 		$contents['Q2'] = 'Exposure Risk';
-		
+
 		$contents['R2'] = 'GLOVES';
 		$contents['S2'] = 'GOWN';
 		$contents['T2'] = 'MASK';
 		$contents['U2'] = 'Mask Type';
 		$contents['V2'] = 'Notes';
-		
+
 		//Header
 		$this->load->library('excel');
 		$letters 	= range('A', 'Z');
@@ -603,7 +603,7 @@ class Mdl_observation extends CI_Model {
 			$contents['T'.$i] = $items->mask_compliance;
 			$contents['U'.$i] = $items->mask_type;
 			$contents['V'.$i] = $items->note;
-			
+
 			if (!in_array($items->hcw_title, $arr_HcwType)) {
 				array_push($arr_HcwType, $items->hcw_title);
 			}
@@ -649,7 +649,7 @@ class Mdl_observation extends CI_Model {
 
 			$i++;
 		}
-		
+
 		sort($arr_Indication);
 
 		$this->excel->getProperties()->setCreator('Hand Hygiene Auditing Tool');
@@ -661,17 +661,17 @@ class Mdl_observation extends CI_Model {
 		$this->excel->getActiveSheet()->setTitle('Details');
 		$this->excel->getActiveSheet()->getDefaultStyle()->getFont()->setSize(11)->setName('Arial');
 		$this->excel->getActiveSheet()->getStyle("A1:Z2")->getFont()->setBold(true);
-		
+
 		$this->excel->setActiveSheetIndex(0)->mergeCells('D1:G1');
 		$this->excel->setActiveSheetIndex(0)->mergeCells('B2:C2');
 		$this->excel->setActiveSheetIndex(0)->mergeCells('H1:I1');
 		$this->excel->setActiveSheetIndex(0)->mergeCells('J1:P1');
 		$this->excel->setActiveSheetIndex(0)->mergeCells('J2:N2');
-		
+
 		$this->excel->getActiveSheet()->getStyle('A1:Z2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$this->excel->getActiveSheet()->getStyle('A1:V2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('2E8B57');
 		$this->excel->getActiveSheet()->getStyle('A1:V2')->getFont()->applyFromArray(array('color' => array('rgb' => 'FFFFFF')));
-		
+
 		$this->excel->getActiveSheet()->getColumnDimension('A')->setWidth(19.33);
 		$this->excel->getActiveSheet()->getColumnDimension('B')->setWidth(15.17);
 		$this->excel->getActiveSheet()->getColumnDimension('C')->setWidth(9.17);
@@ -694,18 +694,18 @@ class Mdl_observation extends CI_Model {
 		$this->excel->getActiveSheet()->getColumnDimension('T')->setWidth(7.67);
 		$this->excel->getActiveSheet()->getColumnDimension('U')->setWidth(12.83);
 		$this->excel->getActiveSheet()->getColumnDimension('V')->setWidth(29.17);
-	
+
 		$mergectr = 3;
 		foreach($contents as $key => $item)
 		{
-			$this->excel->getActiveSheet()->setCellValue($key, $item);	
+			$this->excel->getActiveSheet()->setCellValue($key, $item);
 			$this->excel->getActiveSheet()->mergeCells('B'.$mergectr.':C'.$mergectr.'');
 			$mergectr++;
 		}
-		
+
 		$date_from 	= date('m-d-Y', strtotime($this->input->get('dateFrom')));
 		$date_to 	= date('m-d-Y', strtotime($this->input->get('dateTo')));
-		
+
 
 
 		// START Ronald code here
@@ -845,9 +845,9 @@ class Mdl_observation extends CI_Model {
 		$counterLoc1facility = 1;
 
 		$columnIdxfacility = 1;
-		$columnLetterfacility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility); 
-		$columnLetter1facility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility+1); 
-		$columnLetter2facility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility+2); 
+		$columnLetterfacility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility);
+		$columnLetter1facility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility+1);
+		$columnLetter2facility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility+2);
 		foreach ($arr_HcwType as $hcwUniqueLocfacility) {
 			//B1
 		    $ews4->setCellValue($columnLetterfacility.$counterLoc1facility, $hcwUniqueLocfacility);
@@ -892,14 +892,14 @@ class Mdl_observation extends CI_Model {
 				$ews4->getStyle($columnLetter2facility.$ctrLocfacility)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE);
 
 			    $ctrLocfacility++;
-			} 
+			}
 
 
 
 			$columnIdxfacility = $columnIdxfacility + 3;
-			$columnLetterfacility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility); 
-			$columnLetter1facility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility+1); 
-			$columnLetter2facility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility+2); 
+			$columnLetterfacility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility);
+			$columnLetter1facility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility+1);
+			$columnLetter2facility  = PHPExcel_Cell::stringFromColumnIndex($columnIdxfacility+2);
 
 		}
 
@@ -928,9 +928,9 @@ class Mdl_observation extends CI_Model {
 		$counterLoc1department = 1;
 
 		$columnIdxdepartment = 1;
-		$columnLetterdepartment  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment); 
-		$columnLetter1department  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment+1); 
-		$columnLetter2department  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment+2); 
+		$columnLetterdepartment  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment);
+		$columnLetter1department  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment+1);
+		$columnLetter2department  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment+2);
 		foreach ($arr_HcwType as $hcwUniqueLocdepartment) {
 			//B1
 		    $ews5->setCellValue($columnLetterdepartment.$counterLoc1department, $hcwUniqueLocdepartment);
@@ -976,14 +976,14 @@ class Mdl_observation extends CI_Model {
 				$ews5->getStyle($columnLetter2department.$ctrLocdepartment)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE);
 
 			    $ctrLocdepartment++;
-			} 
+			}
 
 
 
 			$columnIdxdepartment = $columnIdxdepartment + 3;
-			$columnLetterdepartment  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment); 
-			$columnLetter1department  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment+1); 
-			$columnLetter2department  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment+2); 
+			$columnLetterdepartment  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment);
+			$columnLetter1department  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment+1);
+			$columnLetter2department  = PHPExcel_Cell::stringFromColumnIndex($columnIdxdepartment+2);
 
 		}
 
@@ -991,7 +991,7 @@ class Mdl_observation extends CI_Model {
 
         $ews6 = $this->excel->createSheet(5);
 		$ews6->setTitle('LocLevel3');
-		
+
 		$ews6->getStyle('A1:A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$ews6->getStyle('A1:A2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('2E8B57');
 		$ews6->getStyle('A1:A2')->getFont()->applyFromArray(array('color' => array('rgb' => 'FFFFFF')));
@@ -1011,9 +1011,9 @@ class Mdl_observation extends CI_Model {
 		$counterLoc1 = 1;
 
 		$columnIdx = 1;
-		$columnLetter  = PHPExcel_Cell::stringFromColumnIndex($columnIdx); 
-		$columnLetter1  = PHPExcel_Cell::stringFromColumnIndex($columnIdx+1); 
-		$columnLetter2  = PHPExcel_Cell::stringFromColumnIndex($columnIdx+2); 
+		$columnLetter  = PHPExcel_Cell::stringFromColumnIndex($columnIdx);
+		$columnLetter1  = PHPExcel_Cell::stringFromColumnIndex($columnIdx+1);
+		$columnLetter2  = PHPExcel_Cell::stringFromColumnIndex($columnIdx+2);
 		foreach ($arr_HcwType as $hcwUniqueLoc) {
 			//B1
 		    $ews6->setCellValue($columnLetter.$counterLoc1, $hcwUniqueLoc);
@@ -1043,7 +1043,7 @@ class Mdl_observation extends CI_Model {
 			$ews6->getStyle($columnLetter2.($counterLoc1+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			$ews6->getStyle($columnLetter2.($counterLoc1+1))->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('2E8B57');
 			$ews6->getStyle($columnLetter2.($counterLoc1+1))->getFont()->applyFromArray(array('color' => array('rgb' => 'FFFFFF')));
-			
+
 
 			//populate rows below
 			$ctrLoc = 3;
@@ -1059,21 +1059,21 @@ class Mdl_observation extends CI_Model {
 				$ews6->getStyle($columnLetter2.$ctrLoc)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE);
 
 			    $ctrLoc++;
-			} 
+			}
 
 
 
 			$columnIdx = $columnIdx + 3;
-			$columnLetter  = PHPExcel_Cell::stringFromColumnIndex($columnIdx); 
-			$columnLetter1  = PHPExcel_Cell::stringFromColumnIndex($columnIdx+1); 
-			$columnLetter2  = PHPExcel_Cell::stringFromColumnIndex($columnIdx+2); 
+			$columnLetter  = PHPExcel_Cell::stringFromColumnIndex($columnIdx);
+			$columnLetter1  = PHPExcel_Cell::stringFromColumnIndex($columnIdx+1);
+			$columnLetter2  = PHPExcel_Cell::stringFromColumnIndex($columnIdx+2);
 
 		}
 
 
 		$ews7 = $this->excel->createSheet(6);
 		$ews7->setTitle('LocLevel4');
-		
+
 		$ews7->getStyle('A1:A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$ews7->getStyle('A1:A2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('2E8B57');
 		$ews7->getStyle('A1:A2')->getFont()->applyFromArray(array('color' => array('rgb' => 'FFFFFF')));
@@ -1093,9 +1093,9 @@ class Mdl_observation extends CI_Model {
 		$counterLoc1service = 1;
 
 		$columnIdxservice = 1;
-		$columnLetterservice  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice); 
-		$columnLetter1service  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice+1); 
-		$columnLetter2service  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice+2); 
+		$columnLetterservice  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice);
+		$columnLetter1service  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice+1);
+		$columnLetter2service  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice+2);
 		foreach ($arr_HcwType as $hcwUniqueLocservice) {
 			//B1
 		    $ews7->setCellValue($columnLetterservice.$counterLoc1service, $hcwUniqueLocservice);
@@ -1140,18 +1140,18 @@ class Mdl_observation extends CI_Model {
 				$ews7->getStyle($columnLetter2service.$ctrLocservice)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE);
 
 			    $ctrLocservice++;
-			} 
+			}
 
 
 
 			$columnIdxservice = $columnIdxservice + 3;
-			$columnLetterservice  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice); 
-			$columnLetter1service  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice+1); 
-			$columnLetter2service  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice+2); 
+			$columnLetterservice  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice);
+			$columnLetter1service  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice+1);
+			$columnLetter2service  = PHPExcel_Cell::stringFromColumnIndex($columnIdxservice+2);
 
 		}
 
-		
+
 
 
 
@@ -1250,7 +1250,7 @@ class Mdl_observation extends CI_Model {
 		$ews2->getStyle('D22:G22')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$ews2->getStyle('D22:G22')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('2E8B57');
 		$ews2->getStyle('D22:G22')->getFont()->applyFromArray(array('color' => array('rgb' => 'FFFFFF')));
-		
+
 		$ews2->setCellValue('I22', 'Loc Level 2');
 		$ews2->setCellValue('J22', 'Passed');
 		$ews2->setCellValue('K22', 'Total');
@@ -1259,15 +1259,15 @@ class Mdl_observation extends CI_Model {
 		$ews2->getStyle('I22:L22')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('2E8B57');
 		$ews2->getStyle('I22:L22')->getFont()->applyFromArray(array('color' => array('rgb' => 'FFFFFF')));
 
-		
+
 		$ews2->setCellValue('N22', 'Loc Level 3');
 		$ews2->setCellValue('O22', 'Passed');
 		$ews2->setCellValue('P22', 'Total');
 		$ews2->setCellValue('Q22', '%');
 		$ews2->getStyle('N22:Q22')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$ews2->getStyle('N22:Q22')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('2E8B57');
-		$ews2->getStyle('N22:Q22')->getFont()->applyFromArray(array('color' => array('rgb' => 'FFFFFF')));		
-		
+		$ews2->getStyle('N22:Q22')->getFont()->applyFromArray(array('color' => array('rgb' => 'FFFFFF')));
+
 		//LOCATION FOUR HERE
 		$ews2->setCellValue('S22', 'Loc Level 4');
 		$ews2->setCellValue('T22', 'Passed');
@@ -1307,11 +1307,11 @@ class Mdl_observation extends CI_Model {
 		$ews2->setCellValue('AH22', 'Moment');
 		$ews2->setCellValue('AI22', 'Total');
 		$ews2->setCellValue('AJ22', 'Passed');
-		$ews2->setCellValue('AK22', 'Failed');		
-		$ews2->setCellValue('AL22', '%');	
+		$ews2->setCellValue('AK22', 'Failed');
+		$ews2->setCellValue('AL22', '%');
 		$ews2->getStyle('AH22:AL22')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$ews2->getStyle('AH22:AL22')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('2E8B57');
-		$ews2->getStyle('AH22:AL22')->getFont()->applyFromArray(array('color' => array('rgb' => 'FFFFFF')));	
+		$ews2->getStyle('AH22:AL22')->getFont()->applyFromArray(array('color' => array('rgb' => 'FFFFFF')));
 
 		//FOR HCW
 		//N-Q to X-AA
@@ -1355,7 +1355,7 @@ class Mdl_observation extends CI_Model {
                     $pa,
                     true,
                     0,
-                    NULL, 
+                    NULL,
                     NULL
                     );
 
@@ -1398,7 +1398,7 @@ class Mdl_observation extends CI_Model {
                     $pamoment,
                     true,
                     0,
-                    NULL, 
+                    NULL,
                     NULL
                     );
 
@@ -1454,7 +1454,7 @@ class Mdl_observation extends CI_Model {
                     $pafacility,
                     true,
                     0,
-                    NULL, 
+                    NULL,
                     NULL
                     );
 
@@ -1507,7 +1507,7 @@ class Mdl_observation extends CI_Model {
                     $padepartment,
                     true,
                     0,
-                    NULL, 
+                    NULL,
                     NULL
                     );
 
@@ -1561,7 +1561,7 @@ class Mdl_observation extends CI_Model {
                     $paward,
                     true,
                     0,
-                    NULL, 
+                    NULL,
                     NULL
                     );
 
@@ -1614,7 +1614,7 @@ class Mdl_observation extends CI_Model {
                     $paservice,
                     true,
                     0,
-                    NULL, 
+                    NULL,
                     NULL
                     );
 
@@ -1712,7 +1712,7 @@ class Mdl_observation extends CI_Model {
                     $paindication,
                     true,
                     0,
-                    NULL, 
+                    NULL,
                     NULL
                     );
 
@@ -1731,20 +1731,20 @@ class Mdl_observation extends CI_Model {
 		$writer->save($file);
 		return $file;
 	}
-		
-	
+
+
 	public function api_locations($cid, $uid)
 	{
 		$this->db->where(array('cid' => $cid, 'deleted' => 0));
 		$query 	= $this->db->get('locations');
 		$result = array();
-		
+
 		foreach($query->result() as $loc)
 		{
 			$sid = ($loc->sort == 0) ? $loc->id : $loc->sort;
 			$result[$loc->category][$sid] = array('name' => $loc->name, 'id' => $loc->id);
 		}
-		
+
 		if($this->input->get('type') == 'mobile')
 		{
 			$this->db->where('id', $uid);
@@ -1752,29 +1752,29 @@ class Mdl_observation extends CI_Model {
 		}
 		return array( 'status' => 1, 'errortype' => 'success', 'message' => '', 'result' => $result);
 	}
-	
-	
-	
+
+
+
 	public function api_statistics($uid)
 	{
 		$this->load->model('Mdl_users');
-		
-		$user = $this->ion_auth->user($uid)->row();	
+
+		$user = $this->ion_auth->user($uid)->row();
 		$date_from 	= strtotime($this->input->get('dateFrom'));
 		$date_to 	= strtotime($this->input->get('dateTo'));
-		
+
 		if($this->input->get('department') > 0) 	$this->db->where('location_level1', $this->input->get('department'));
 		if($this->input->get('subDepartment') > 0) 	$this->db->where('location_level2', $this->input->get('subDepartment'));
 		if($this->input->get('ward') > 0) 			$this->db->where('location_level3', $this->input->get('ward'));
 		if($this->input->get('patient') > 0) 		$this->db->where('location_level4', $this->input->get('patient'));
 		if($this->input->get('healthcare') > 0) 	$this->db->where('hcw_title', $this->input->get('healthcare'));
-		
+
 		if($this->input->get('dateFrom') != '')
 			$this->db->where('observations.date_registered >=',date('Y-m-d 00:00:00',$date_from));
-			
+
 		if($this->input->get('dateTo') != '')
 			$this->db->where('observations.date_registered <=',date('Y-m-d 23:59:59',$date_to));
-		
+
 
 		if($this->input->get('auditor') != '') {
 			$this->db->where('uid', $this->input->get('auditor'));
@@ -1793,10 +1793,10 @@ class Mdl_observation extends CI_Model {
 		// else {
 		// 	$stats['momentRecords'] 	= $this->api_countobservation($user->cid, $uid);
 		// }
-		
+
 		$stats['date']['from'] 		= date('M j, Y', $date_from);
 		$stats['date']['to'] 		= date('M j, Y', $date_to);
-		
+
 		return array( 'status' => 1, 'errortype' => 'success', 'message' => $uid, 'result' => $stats);
 	}
 
@@ -1805,19 +1805,19 @@ class Mdl_observation extends CI_Model {
 		$user 		= $this->ion_auth->user($uid)->row();
 		$date_from 	= strtotime($this->input->get('dateFrom'));
 		$date_to 	= strtotime($this->input->get('dateTo'));
-		
+
 		if($this->input->get('department') > 0) 	$this->db->where('location_level1', $this->input->get('department'));
 		if($this->input->get('subDepartment') > 0) 	$this->db->where('location_level2', $this->input->get('subDepartment'));
 		if($this->input->get('ward') > 0) 			$this->db->where('location_level3', $this->input->get('ward'));
 		if($this->input->get('patient') > 0) 		$this->db->where('location_level4', $this->input->get('patient'));
 		if($this->input->get('healthcare') > 0) 	$this->db->where('hcw_title', $this->input->get('healthcare'));
-		
+
 		if($this->input->get('dateFrom') != '')
 			$this->db->where('observations.date_registered >=',date('Y-m-d 00:00:00',$date_from));
-			
+
 		if($this->input->get('dateTo') != '')
 			$this->db->where('observations.date_registered <=',date('Y-m-d 23:59:59',$date_to));
-		
+
 		if($this->input->get('auditor') != '') {
 			$this->db->where('uid', $this->input->get('auditor'));
 		}
@@ -1826,14 +1826,14 @@ class Mdl_observation extends CI_Model {
 		}
 		$this->db->select('moment1, moment2, moment3, moment4, moment5, hh_compliance');
 		$query = $this->db->get('observations');
-		
+
 		$passedFailed 	= array('passed' => 0, 'failed' => 0);
 		$momentRecords 	= array( 1 => $passedFailed, 2 => $passedFailed, 3 => $passedFailed, 4 => $passedFailed, 5 => $passedFailed);
-		
+
 		foreach($query->result() as $data)
 		{
 			for($x = 1; $x <=5; $x++){
-				$moment = 'moment'.$x; 
+				$moment = 'moment'.$x;
 				if($data->$moment == $x)
 				{
 					if($data->hh_compliance == 'missed')
@@ -1845,7 +1845,7 @@ class Mdl_observation extends CI_Model {
 		}
 		return $momentRecords;
 	}
-	
+
 	public function search_locations($category, $keyword, $cid)
 	{
 		$this->db->where('id', $category);
@@ -1854,7 +1854,7 @@ class Mdl_observation extends CI_Model {
 		$this->db->select('id');
 		$query 		= $this->db->get('locations');
 		$response 	= false;
-		
+
 		if($query->num_rows())
 		{
 			$response = array();
@@ -1863,9 +1863,53 @@ class Mdl_observation extends CI_Model {
 				$response[] = $row->id;
 			}
 		}
-		
+
 		return $response;
 	}
+
+    /**
+     * @param array $filterOptions
+     * @return mixed
+     */
+    public function fetchWebChartData($filterOptions = array())
+    {
+        $query = $this->db->select("obs.*,
+                IF(obs.hh_compliance = 'missed', 'FAILED', 'PASSED') AS result,
+                l1.name AS location_1_name,
+                l2.name AS location_2_name,
+                l3.name AS location_3_name,
+                l4.name AS location_4_name,
+                hcw.name AS hcw_titlename,
+                CONCAT(u.first_name, ' ', u.last_name) AS username
+                "
+            )
+            ->from('observations obs')
+            ->join("locations l1", "l1.category = 'location1' AND l1.id = obs.location_level1 AND l1.deleted = 0", 'left')
+            ->join("locations l2", "l2.category = 'location2' AND l2.id = obs.location_level2 AND l2.deleted = 0", 'left')
+            ->join("locations l3", "l3.category = 'location3' AND l3.id = obs.location_level3 AND l3.deleted = 0", 'left')
+            ->join("locations l4", "l4.category = 'location4' AND l4.id = obs.location_level4 AND l4.deleted = 0", 'left')
+            ->join("locations hcw", "hcw.category = 'healthcare' AND hcw.id = obs.hcw_title AND hcw.deleted = 0", 'left')
+            ->join("users u", "u.id = obs.uid")
+        ;
+
+        if (!empty($filterOptions['company'])) {
+            $query->where('obs.cid', $filterOptions['company']);
+        }
+
+        if (!empty($filterOptions['user'])) {
+            $query->where('obs.uid', $filterOptions['user']);
+        }
+
+        if (!empty($filterOptions['startDate'])) {
+            $query->where('obs.date_registered >=', $filterOptions['startDate']);
+        }
+
+        if (!empty($filterOptions['endDate'])) {
+            $query->where('obs.date_registered <=', $filterOptions['endDate']);
+        }
+
+        return $query->get()->result_array();
+    }
 }
 
 

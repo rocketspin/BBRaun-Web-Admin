@@ -2,6 +2,33 @@ body{
 	background:#e8ebf1;
 	font-family: 'Open Sans', sans-serif;
 }
+
+.text-primary {
+	color: #00b582;
+}
+
+.panel-title {
+	margin-top: 7px;
+}
+
+.navIcons {
+	font-size: 25px;
+	color: #00b582;
+}
+
+.navIcons-danger {
+	font-size: 25px;
+	color: #a94442;;
+}
+
+.bg-primary {
+	background-color: #00b582;
+}
+
+#wrapper2 {
+	width: 100%;
+}
+
 #wrapper{
 	margin-top:65px;
 	min-width:1024px;
@@ -82,8 +109,8 @@ a:active{
 	float:left;
 	font-size:24px;
 	color:#4a505b;
-	white-space: nowrap; 
-    width: 100%; 
+	white-space: nowrap;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 	padding-right:195px;
@@ -278,7 +305,7 @@ ul.pagination{
 .form-search{
 	float:left;
 }
-.padded-20{ 
+.padded-20{
 	padding:20px;
 }
 .form-generate-id{
@@ -545,7 +572,7 @@ ul.pagination{
 	outline:none;
 }
 #note-container .note-body ul li:hover{
-	
+
 	background:#D9EDF7;
 }
 #note-container .note-body ul li img{
@@ -581,7 +608,7 @@ ul.pagination{
 	border-color:#009380;
 }
 
-.btn-primary:active:hover, 
+.btn-primary:active:hover,
 .btn-primary.active:hover,
 .open > .dropdown-toggle.btn-primary:hover,
 .btn-primary:active:focus, .btn-primary.active:focus,
@@ -712,14 +739,12 @@ ol.location-list li i.delete:hover{
 
 ul.tsc_pagination { margin:4px 0; padding:0px; height:100%; overflow:hidden; font:12px 'Tahoma'; list-style-type:none; }
 ul.tsc_pagination li { float:left; margin:0px; padding:0px; margin-left:5px; }
- 
+
 ul.tsc_pagination li a { color:black; display:block; text-decoration:none; padding:7px 10px 7px 10px; }
- 
- 
+
+
 ul.tsc_paginationA li a { color:#FFFFFF; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; }
- 
+
 ul.tsc_paginationA01 li a { color:#474747; border:solid 1px #B6B6B6; padding:6px 9px 6px 9px; background:#E6E6E6; background:-moz-linear-gradient(top, #FFFFFF 1px, #F3F3F3 1px, #E6E6E6); background:-webkit-gradient(linear, 0 0, 0 100%, color-stop(0.02, #FFFFFF), color-stop(0.02, #F3F3F3), color-stop(1, #E6E6E6)); }
 ul.tsc_paginationA01 li:hover a,
 ul.tsc_paginationA01 li.current a { background:#FFFFFF; }
-
-

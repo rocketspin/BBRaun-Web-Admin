@@ -4,7 +4,7 @@
                 <div class="panel-heading">
                     <h2 class="panel-title pull-left"><i class="fa fa-bar-chart-o fa-fw"></i> Compliance Report (Charts)</h2>
                     <div class="dropdown pull-right">
-                        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-gear"></i> Options
+                        <button class="btn btn-warning btn-block dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-gear"></i> <span class="hidden-sm hidden-xs">Options</span>
                         <span class="caret"></span></button>
                         <ul class="dropdown-menu">
                             <li><a href="#" v-on:click="toggleModal"><i class="fa fa-filter"></i> Show Filters</a></li>

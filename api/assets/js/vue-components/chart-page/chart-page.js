@@ -161,8 +161,8 @@
                 loc2: '',
                 loc3: '',
                 loc4: '',
-                startDate: moment().format('YYYY-MM-DD'),
-                endDate: moment().format('YYYY-MM-DD'),
+                startDate: moment().add(-1, 'days').format('YYYY-MM-DD'),
+                endDate: moment().add(-1, 'days').format('YYYY-MM-DD'),
                 complianceOptions: [
                     "loc1",
                     "loc2",
@@ -200,6 +200,7 @@
                 loc4m: _.cloneDeep(chartDataTemplate),
             }
         },
+
         created: function() {
             this.getCompanies();
             this.getUsers(true);
@@ -207,6 +208,7 @@
             this.getLocations();
             this.fetchData();
         },
+
         mounted: function() {
             var self = this;
             $(".from_date").datepicker({
@@ -321,6 +323,10 @@
                 $('#filterModal').modal('toggle');
             },
 
+            toggleModal: function() {
+                $('#filterModal').modal('toggle');
+            },
+
             fetchData: function() {
                 var self = this;
                 jQuery.get('/chart/getData/', this.selected)
@@ -347,6 +353,12 @@
                             columns: tableColumns
                         })
                     });
+            },
+
+            exportToPdf: function() {
+                var self = this;
+                var params = $.param(self.selected);
+                window.open('/chartExports/exportPdf?' + params);
             },
 
             addComplianceOptions(option) {

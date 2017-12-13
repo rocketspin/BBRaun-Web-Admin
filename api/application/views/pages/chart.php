@@ -3,9 +3,15 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h2 class="panel-title pull-left"><i class="fa fa-bar-chart-o fa-fw"></i> Compliance Report (Charts)</h2>
-                    <button type="button" class="btn btn-warning pull-right" data-toggle="modal" data-target="#filterModal">
-                        <i class="fa fa-filter"></i> Show Filters
-                    </button>
+                    <div class="dropdown pull-right">
+                        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-gear"></i> Options
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" v-on:click="toggleModal"><i class="fa fa-filter"></i> Show Filters</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" v-on:click="exportToPdf"><i class="fa fa-download"></i> Export to PDF</a></li>
+                        </ul>
+                    </div>
                     <div class="clearfix"></div>
                 </div>
 

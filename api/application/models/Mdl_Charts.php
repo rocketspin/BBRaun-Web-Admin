@@ -275,7 +275,8 @@ class Mdl_Charts extends CI_Model
         foreach ($dataSet as $key => $item) {
             if (isset($item['passed']) && isset($item['label']) && isset($item['total'])) {
                 $dataPercentage['columns'][] = $item['label'];
-                $dataPercentage['values'][] = (($item['passed'] / $item['total']) * 100);
+                $dataPercentage['values'][] = round((($item['passed'] / $item['total']) * 100), 2);
+
             }
         }
 

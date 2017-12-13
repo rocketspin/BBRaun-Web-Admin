@@ -54,6 +54,7 @@ class Chart extends CI_Controller
         $locations = $this->Mdl_locations->getLocations($companyId);
         $this->returnJsonResponse($locations);
     }
+
     /**
      *
      */
@@ -78,6 +79,10 @@ class Chart extends CI_Controller
         $this->returnJsonResponse($response);
     }
 
+    /**
+     *
+     * @return void
+     */
     public function generateExcelRawDataReport()
     {
         $filterOptions = $this->input->get();

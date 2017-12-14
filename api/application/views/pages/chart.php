@@ -9,7 +9,8 @@
                         <ul class="dropdown-menu">
                             <li><a href="#" v-on:click="toggleModal"><i class="fa fa-filter"></i> Show Filters</a></li>
                             <li class="divider"></li>
-                            <li><a href="#" v-on:click="exportToPdf"><i class="fa fa-download"></i> Export to PDF</a></li>
+                            <li><a href="#" v-on:click="exportToPdf"><i class="fa fa-file-pdf-o"></i> Export Charts to PDF</a></li>
+                            <li><a href="#" v-on:click="exportToExcel"><i class="fa fa-table"></i> Export Raw Data to Excel</a></li>
                         </ul>
                     </div>
                     <div class="clearfix"></div>
@@ -222,7 +223,12 @@
             <div class="panel panel-primary">
 
                 <div class="panel-heading">
-                    <h2 class="panel-title pull-left"><i class="fa fa-table fa-fw"></i> Compliance Report (Drilldown)</h2>
+
+                    <h2 class="panel-title pull-left"><i class="fa fa-table"></i> Compliance Report (Raw Data)</h2>
+                     <button type="button" class="btn btn-warning pull-right" v-on:click="exportToExcel">
+                         <i class="fa fa-file-excel-o"></i> <span class="hidden-sm hidden-xs">Export to Excel</span>
+                     </button>
+
                     <div class="clearfix"></div>
                 </div>
 

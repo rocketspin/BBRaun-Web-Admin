@@ -54,6 +54,44 @@ class ChartExports extends CI_Controller
 
         }
 
-        $this->pdf->Output('name.pdf', 'D');
+        $this->pdf->Output('Hand Hygiene Compliance Chart.pdf', 'D');
+    }
+
+    /**
+     * Generates excel report and buffer it off to the browser
+     */
+    public function exportExcel()
+    {
+        $filterOptions = $this->input->get();
+        $companyId = $this->getCompanyIdOfCurrentUser();
+        if ($companyId) {
+            // override company value to limit to current user's company value
+            $filterOptions['company'] = $companyId;
+        }
+
+        $this->load->model('Mdl_observation');
+        $observations = $this->Mdl_observation->fetchWebChartData($filterOptions);
+
+        $this->load->library('ExcelReportHelper');
+        $this->excelreporthelper->createExcelSheet($observations);
+
+        // We'll be outputting an excel file
+        header('Content-type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename="Hand Hygiene Compliance Data.xlsx"');
+        $writer = PHPExcel_IOFactory::createWriter($this->excelreporthelper, 'Excel2007');
+        $writer->save('php://output');
+    }
+
+    /**
+     * @return int|null
+     */
+    private function getCompanyIdOfCurrentUser()
+    {
+        $companyId = null;
+        if (!$this->ion_auth->is_admin()) {
+            $companyId = $this->ion_auth->user()->row()->cid;
+        }
+
+        return $companyId;
     }
 }

@@ -361,6 +361,12 @@
                 window.open('/chartExports/exportPdf?' + params);
             },
 
+            exportToExcel: function () {
+                var self = this;
+                var params = $.param(self.selected);
+                window.open('/chartExports/exportExcel?' + params);
+            },
+
             addComplianceOptions(option) {
                 this.selected.complianceOptions.push(option);
             },

@@ -242,7 +242,6 @@ class Mdl_Charts extends CI_Model
                 }
 
                 $dataSet[$key]['label'] = $moment;
-
                 if (!isset($dataSet[$key]['total'])) {
                     $dataSet[$key]['total'] = 0;
                 }

@@ -205,7 +205,9 @@ class ExcelReportHelper extends PHPExcel
                     $finalDataSet[$locationName][] = $loc[$hcw]['total'];
                     $finalDataSet[$locationName][] = "{$loc[$hcw]['percentage']}%";
                 } else {
-                    $finalDataSet[$locationName] = array('', '', '');
+                    $finalDataSet[$locationName][] = "0";
+                    $finalDataSet[$locationName][] = "0";
+                    $finalDataSet[$locationName][] = "0%";
                 }
             }
         }
@@ -415,7 +417,9 @@ class ExcelReportHelper extends PHPExcel
                     $finalDataSet[$locationName][] = $loc[$moment]['total'];
                     $finalDataSet[$locationName][] = $loc[$moment]['percentage'] . "%";
                 } else {
-                    $finalDataSet[$locationName] = array('', '', '');
+                    $finalDataSet[$locationName][] = "0";
+                    $finalDataSet[$locationName][] = "0";
+                    $finalDataSet[$locationName][] = "0%";
                 }
             }
         }
@@ -562,7 +566,9 @@ class ExcelReportHelper extends PHPExcel
                     $finalResultSet[$hcw][] = $momentStats[$moment]['total'];
                     $finalResultSet[$hcw][] = "{$momentStats[$moment]['percentage']}%";
                 } else {
-                    array_push($finalResultSet[$hcw], "", "", "");
+                    $finalResultSet[$hcw][] = "0";
+                    $finalResultSet[$hcw][] = "0";
+                    $finalResultSet[$hcw][] = "0%";
                 }
             }
         }

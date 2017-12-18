@@ -4,7 +4,7 @@
 
 require_once dirname(__FILE__) . '/SVGGraph/SVGGraph.php';
 
-class SvgGraphHelper
+class Svggraphhelper
 {
     protected $graph;
     protected $settings = array(

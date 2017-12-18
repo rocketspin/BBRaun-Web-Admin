@@ -230,6 +230,7 @@ class ExcelReportHelper extends PHPExcel
         if (!$hcw) {
             $sheet->getStyle("A1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('00b582');
             $sheet->setCellValue("A1", "No Data to Display");
+            return $sheet;
         }
 
         $centerStyle = array(

@@ -242,28 +242,28 @@
 
             getCompanies: function() {
                 var self = this;
-                jQuery.get('/chart/institutions', function(data){
+                jQuery.get(chartUrlPrefix + '/chart/institutions', function(data){
                     self.companies = data;
                 });
             },
 
             getUsers: function(bln) {
                 var self = this;
-                jQuery.get('/chart/users', function(data){
+                jQuery.get(chartUrlPrefix + '/chart/users', function(data){
                     self.users = self.usersLookup = data;
                 });
             },
 
             getHcw: function() {
                 var self = this;
-                jQuery.get('/chart/hcw', function(data){
+                jQuery.get(chartUrlPrefix + '/chart/hcw', function(data){
                     self.hcw = self.hcwLookup = data;
                 });
             },
 
             getLocations: function() {
                 var self = this;
-                jQuery.get('/chart/locations', function(data){
+                jQuery.get(chartUrlPrefix + '/chart/locations', function(data){
 
                     self.loc1Lookup = self.loc1 = data.filter(function(loc){
                         return loc.category == 'location1';
@@ -329,7 +329,7 @@
 
             fetchData: function() {
                 var self = this;
-                jQuery.get('/chart/getData/', this.selected)
+                jQuery.get(chartUrlPrefix + '/chart/getData/', this.selected)
                     .done(function(data) {
                         self.rawData = data.rawData;
                         $.each(data.chart, function(index, val){
@@ -358,13 +358,13 @@
             exportToPdf: function() {
                 var self = this;
                 var params = $.param(self.selected);
-                window.open('/chartExports/exportPdf?' + params);
+                window.open(chartUrlPrefix + '/chartExports/exportPdf?' + params);
             },
 
             exportToExcel: function () {
                 var self = this;
                 var params = $.param(self.selected);
-                window.open('/chartExports/exportExcel?' + params);
+                window.open(chartUrlPrefix + '/chartExports/exportExcel?' + params);
             },
 
             addComplianceOptions(option) {

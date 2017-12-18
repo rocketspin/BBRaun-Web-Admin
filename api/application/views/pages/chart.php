@@ -1,4 +1,4 @@
-    <div class="row" id="app">
+<div class="row" id="app">
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -397,6 +397,9 @@
             </div>
         </div>
     </div>
+    <script>
+        var chartUrlPrefix = "<?php echo $data['chartUrlPrefix']; ?>"
+    </script>
 
     <script src="<?=base_url('assets/js/vuejs/vue.js')?>"></script>
     <script src="<?=base_url('assets/js/chartjs/Chart.min.js')?>"></script>

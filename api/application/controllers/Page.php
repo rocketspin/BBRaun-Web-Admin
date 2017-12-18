@@ -438,7 +438,8 @@ class Page extends CI_Controller
     public function chart()
     {
         $data['data']['response']  = $this->session->flashdata('response');
-        $data['page']              = 'chart';
+		$data['page']              = 'chart';
+		$data['data']['chartUrlPrefix'] = getenv('CI_ENV') == 'local' ? '' : '/api';
         $this->load->view('index', $data);
     }
 }

@@ -223,8 +223,14 @@ class ExcelReportHelper extends PHPExcel
      */
     public function createAndFormatLocationSheet($location, $hcw)
     {
+
         $sheet = $this->createSheet($this->locationLookup[$location]['loc_index']);
         $sheet->setTitle($this->locationLookup[$location]['loc']);
+
+        if (!$hcw) {
+            $sheet->getStyle("A1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('00b582');
+            $sheet->setCellValue("A1", "No Data to Display");
+        }
 
         $centerStyle = array(
             'alignment' => array(
@@ -556,7 +562,7 @@ class ExcelReportHelper extends PHPExcel
                 $newDataSet[$key][$moment]['percentage'] = round((($newDataSet[$key][$moment]['passed'] / $newDataSet[$key][$moment]['total']) * 100), 2);
             }
         }
-        
+
         $finalResultSet = array();
         foreach ($newDataSet as $hcw => $momentStats) {
             $finalResultSet[$hcw][] = $hcw;

@@ -44,6 +44,7 @@ class ChartExports extends CI_Controller
         foreach ($filterOptions['complianceOptions'] as $complianceOption) {
             $chartName = isset($compNames[$complianceOption]) ? $compNames[$complianceOption] : 'Compliance Rate';
             $percentagesOutput = $this->Mdl_charts->generateChartDataSets($complianceOption, $rawData);
+            $percentagesOutput['values'] = count($percentagesOutput['values']) ? $percentagesOutput['values'] : array();
             $dataSet =  array_combine($percentagesOutput['columns'], $percentagesOutput['values']);
 
             $this->pdf->AddPage();

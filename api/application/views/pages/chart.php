@@ -1,3 +1,4 @@
+
 <div class="row" id="app">
         <div class="col-lg-12">
             <div class="panel panel-primary">
@@ -21,6 +22,7 @@
 
                     <div class="col-md-6" v-if="showChart('loc1')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 1</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -28,12 +30,14 @@
                                 :data="chartData.loc1.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('loc2')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 2</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -41,12 +45,14 @@
                                 :data="chartData.loc2.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('loc3')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 3</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -54,12 +60,14 @@
                                 :data="chartData.loc3.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('loc4')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 4</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -67,12 +75,14 @@
                                 :data="chartData.loc4.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('hcw')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Healthcare Compliance</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -80,12 +90,14 @@
                                 :data="chartData.hcw.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('cpm')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Count by Moment</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -93,12 +105,14 @@
                                 :data="chartData.cpm.datasets[0].data"
                                 :bind="true"
                                 :option="chartCountConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('cbm')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Compliance By Moment</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -106,12 +120,14 @@
                                 :data="chartData.cbm.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('loc1hcw')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 1 By Health Care Worker</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -119,12 +135,14 @@
                                 :data="chartData.loc1hcw.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('loc1m')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 1 By Moment</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -132,12 +150,14 @@
                                 :data="chartData.loc1m.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('loc2hcw')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 2 By Health Care Worker</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -145,12 +165,14 @@
                                 :data="chartData.loc2hcw.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('loc2m')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 2 By Moment</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -158,12 +180,14 @@
                                 :data="chartData.loc2m.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('loc3hcw')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 3 By Health Care Worker</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -171,12 +195,14 @@
                                 :data="chartData.loc3hcw.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('loc3m')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 3 By Moment</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -184,12 +210,14 @@
                                 :data="chartData.loc3m.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('loc4hcw')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 4 By Health Care Worker</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -197,12 +225,14 @@
                                 :data="chartData.loc4hcw.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>
 
                     <div class="col-md-6" v-if="showChart('loc4m')">
                         <div class="well">
+                            <div class="center-block loader" v-if="loading"></div>
                             <h4 class="text-center">Location 4 By Moment</h4>
                             <chartjs-bar :datalabel="'Compliance'"
                                 :backgroundcolor="'#00B582'"
@@ -210,6 +240,7 @@
                                 :data="chartData.loc4m.datasets[0].data"
                                 :bind="true"
                                 :option="chartConfig"
+                                v-if="!loading"
                                 ></chartjs-bar>
                         </div>
                     </div>

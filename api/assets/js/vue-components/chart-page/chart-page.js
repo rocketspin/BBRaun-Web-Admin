@@ -138,6 +138,7 @@
       var vm = new Vue({
         el: '#app',
         data: {
+            loading: false,
             chartConfig: chartConfig,
             chartCountConfig: chartCountConfig,
             companies: [],
@@ -329,6 +330,7 @@
 
             fetchData: function() {
                 var self = this;
+                self.loading = true;
                 jQuery.get(chartUrlPrefix + '/chart/getData/', this.selected)
                     .done(function(data) {
                         self.rawData = data.rawData;
@@ -352,6 +354,8 @@
                             searching: false,
                             columns: tableColumns
                         })
+
+                        self.loading = false;
                     });
             },
 

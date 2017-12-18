@@ -70,10 +70,10 @@ class Chart extends CI_Controller
         $this->load->model('Mdl_observation');
         $response['rawData'] = $this->Mdl_observation->fetchWebChartData($filterOptions);
 
-        $this->load->model('Mdl_Charts');
+        $this->load->model('Mdl_charts');
 
         foreach ($filterOptions['complianceOptions'] as $complianceOption) {
-            $response['chart'][$complianceOption] = $this->Mdl_Charts->generateChartDataSets($complianceOption, $response['rawData']);
+            $response['chart'][$complianceOption] = $this->Mdl_charts->generateChartDataSets($complianceOption, $response['rawData']);
         }
 
         $this->returnJsonResponse($response);

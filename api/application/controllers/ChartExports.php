@@ -16,7 +16,7 @@ class ChartExports extends CI_Controller
     {
         $this->load->library('svggraphhelper');
         $this->load->library('pdf');
-        $this->load->model('Mdl_Charts');
+        $this->load->model('Mdl_charts');
         $this->load->model('Mdl_observation');
 
         $logoLocation = FCPATH . "assets/img/logo.png";
@@ -43,7 +43,7 @@ class ChartExports extends CI_Controller
         $y = 30;
         foreach ($filterOptions['complianceOptions'] as $complianceOption) {
             $chartName = isset($compNames[$complianceOption]) ? $compNames[$complianceOption] : 'Compliance Rate';
-            $percentagesOutput = $this->Mdl_Charts->generateChartDataSets($complianceOption, $rawData);
+            $percentagesOutput = $this->Mdl_charts->generateChartDataSets($complianceOption, $rawData);
             $dataSet =  array_combine($percentagesOutput['columns'], $percentagesOutput['values']);
 
             $this->pdf->AddPage();

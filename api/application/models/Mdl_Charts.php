@@ -2,7 +2,7 @@
 /**
  * Class Mdl_Charts
  */
-class Mdl_Charts extends CI_Model
+class Mdl_charts extends CI_Model
 {
     const LOCATION1 = 'loc1';
     const LOCATION2 = "loc2";

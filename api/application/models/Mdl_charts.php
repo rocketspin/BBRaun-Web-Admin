@@ -83,7 +83,7 @@ class Mdl_charts extends CI_Model
         $dataSet = array();
         foreach ($chartData as $datum) {
             if (isset($datum[$location]) && !empty($datum[$location])) {
-                $dataSet[$datum[$location]]['label'] = $datum[$locationName];
+                $dataSet[$datum[$location]]['label'] = sprintf("%s (ID %s)", $datum[$locationName], $datum[$location]);
 
                 if (!isset($dataSet[$datum[$location]]['total'])) {
                     $dataSet[$datum[$location]]['total'] = 0;
@@ -114,7 +114,7 @@ class Mdl_charts extends CI_Model
         foreach ($chartData as $datum) {
             $key = $datum['hcw_title'];
             if (isset($datum['hcw_title']) && !empty($datum['hcw_title'])) {
-                $dataSet[$key]['label'] = sprintf("%s ID (%s)", $datum['hcw_titlename'], $key);
+                $dataSet[$key]['label'] = sprintf("%s (ID %s)", $datum['hcw_titlename'], $key);
             }
 
             if (!isset($dataSet[$key]['total'])) {

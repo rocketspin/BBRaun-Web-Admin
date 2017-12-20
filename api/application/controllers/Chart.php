@@ -76,6 +76,18 @@ class Chart extends CI_Controller
             $response['chart'][$complianceOption] = $this->Mdl_charts->generateChartDataSets($complianceOption, $response['rawData']);
         }
 
+        $chunked = array();
+        foreach ($response['chart'] as $complianceOption => $values) {
+            $chunkedColumns = array_chunk($values['columns'], 5);
+            $chunkedValues = array_chunk($values['values'], 5);
+            foreach ($chunkedValues as $key => $value) {
+                $chunked[$complianceOption][] = array(
+                    'values' => $value,
+                    'columns' => $chunkedColumns[$key],
+                );
+            }
+        }
+        $response['chunkedChartData'] = $chunked;
         $this->returnJsonResponse($response);
     }
 

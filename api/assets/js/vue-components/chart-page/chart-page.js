@@ -8,7 +8,7 @@
                     ticks: {
                         min: 0,
                         max: 100,
-                        stepSize: 20
+                        stepSize: 20,
                     },
                     scaleLabel: {
                         display: true,
@@ -22,7 +22,8 @@
                     categoryPercentage: 0.7,
                     barPercentage: 0.4,
                     ticks: {
-                        autoSkip: false
+                        autoSkip: false,
+                        fontSize: 9
                     }
                 }
             ]
@@ -199,7 +200,8 @@
                 loc3m: _.cloneDeep(chartDataTemplate),
                 loc4hcw: _.cloneDeep(chartDataTemplate),
                 loc4m: _.cloneDeep(chartDataTemplate),
-            }
+            },
+            chunkedChartData: {}
         },
 
         created: function() {
@@ -343,7 +345,7 @@
                             }
                         });
 
-                        // self.$refs.barchart.renderBarChart();
+                        self.chunkedChartData = data.chunkedChartData;
 
                         if ($.fn.dataTable.isDataTable( '#rawData' )) {
                             $('#rawData').DataTable().destroy();

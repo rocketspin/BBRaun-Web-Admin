@@ -45,13 +45,21 @@ class ChartExports extends CI_Controller
             $chartName = isset($compNames[$complianceOption]) ? $compNames[$complianceOption] : 'Compliance Rate';
             $percentagesOutput = $this->Mdl_charts->generateChartDataSets($complianceOption, $rawData);
             $percentagesOutput['values'] = count($percentagesOutput['values']) ? $percentagesOutput['values'] : array();
-            $dataSet =  array_combine($percentagesOutput['columns'], $percentagesOutput['values']);
 
-            $this->pdf->AddPage();
-            $this->pdf->Image($logoLocation, 15, 10, 65, 15, 'PNG', '', '', false, 150, '', false, false, 1, false, false, false);
+            $chunked = array();
+            $chunkedColumns = array_chunk($percentagesOutput['columns'], 10);
+            $chunkedValues = array_chunk($percentagesOutput['values'], 10);
+            foreach ($chunkedValues as $key => $value) {
 
-            $output = $this->svggraphhelper->generateBarGraph($dataSet, $chartName);
-            $this->pdf->ImageSVG('@' . $output, $x=30, $y, $w='200', $h='200', '', $align='C', $palign='C', $border=1, $fitonpage=true);
+                $dataSet = array_combine($chunkedColumns[$key], $value);
+
+                $this->pdf->AddPage();
+                $this->pdf->Image($logoLocation, 15, 10, 65, 15, 'PNG', '', '', false, 150, '', false, false, 1, false, false, false);
+                $locInd = $key + 1;
+                $tempChartName = sprintf("%s (%s of %s)", $chartName, $locInd, count($chunkedColumns));
+                $output = $this->svggraphhelper->generateBarGraph($dataSet, $tempChartName);
+                $this->pdf->ImageSVG('@' . $output, $x = 30, $y, $w = '200', $h = '200', '', $align = 'C', $palign = 'C', $border = 1, $fitonpage = true);
+            }
 
         }
 

@@ -67,6 +67,12 @@
                         <i class="fa fa-building-o navIcons"></i>
                     </a>
                 </li>
+                <?php else: ?>
+                    <li>
+                        <a href="<?= base_url('tool') ?>" data-toggle="tooltip" data-placement="bottom" title="Manage Locations" class="pull-left">
+                            <i class="fa fa-map-marker navIcons"></i>
+                        </a>
+                    </li>
                 <?php endif;?>
                 <li>
                     <a href="<?=base_url('auth/logout')?>" data-toggle="tooltip" data-placement="bottom" title="Logout?" class="confirm pull-left">

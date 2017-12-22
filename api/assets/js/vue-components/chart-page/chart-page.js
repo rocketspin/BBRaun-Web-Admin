@@ -373,11 +373,11 @@
                 window.open(chartUrlPrefix + '/chartExports/exportExcel?' + params);
             },
 
-            addComplianceOptions(option) {
+            addComplianceOptions: function(option) {
                 this.selected.complianceOptions.push(option);
             },
 
-            removeComplianceOptions(option) {
+            removeComplianceOptions: function(option) {
                 arr = arr.filter(function(item) {
                     return item !== option
                 })

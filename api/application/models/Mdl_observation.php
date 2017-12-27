@@ -1884,11 +1884,11 @@ class Mdl_observation extends CI_Model {
                 "
             )
             ->from('observations obs')
-            ->join("locations l1", "l1.category = 'location1' AND l1.id = obs.location_level1 AND l1.deleted = 0", 'left')
-            ->join("locations l2", "l2.category = 'location2' AND l2.id = obs.location_level2 AND l2.deleted = 0", 'left')
-            ->join("locations l3", "l3.category = 'location3' AND l3.id = obs.location_level3 AND l3.deleted = 0", 'left')
-            ->join("locations l4", "l4.category = 'location4' AND l4.id = obs.location_level4 AND l4.deleted = 0", 'left')
-            ->join("locations hcw", "hcw.category = 'healthcare' AND hcw.id = obs.hcw_title AND hcw.deleted = 0", 'left')
+            ->join("locations l1", "l1.id = obs.location_level1 AND l1.deleted = 0", 'left')
+            ->join("locations l2", "l2.id = obs.location_level2 AND l2.deleted = 0", 'left')
+            ->join("locations l3", "l3.id = obs.location_level3 AND l3.deleted = 0", 'left')
+            ->join("locations l4", "l4.id = obs.location_level4 AND l4.deleted = 0", 'left')
+            ->join("locations hcw", "hcw.id = obs.hcw_title AND hcw.deleted = 0", 'left')
             ->join("users u", "u.id = obs.uid")
         ;
 

@@ -188,7 +188,7 @@
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
                                                 :bind="true"
-                                                :option="chartConfig"
+                                                :option="chartCountConfig"
                                                 :height="250"
                                                 v-if="!loading"
                                                 ></chartjs-bar>

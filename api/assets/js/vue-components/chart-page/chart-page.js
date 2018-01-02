@@ -36,8 +36,7 @@
                 {
                     ticks: {
                         min: 0,
-                        // max: 100,
-                        stepSize: 20
+                        stepSize: 200
                     },
                     scaleLabel: {
                         display: true,

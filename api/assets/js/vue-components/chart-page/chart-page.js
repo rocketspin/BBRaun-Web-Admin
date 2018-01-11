@@ -77,16 +77,16 @@
             title: "Auditor"
         }, {
             data: 'location_1_name',
-            title: "Location 1"
+            title: "Location Level 1"
         }, {
             data: 'location_2_name',
-            title: "Location 2"
+            title: "Location Level 2"
         }, {
             data: 'location_3_name',
-            title: "Location 3"
+            title: "Location Level 3"
         }, {
             data: 'location_4_name',
-            title: "Location 4"
+            title: "Location Level 4"
         }, {
             data: 'hcw_titlename',
             title: "Title"

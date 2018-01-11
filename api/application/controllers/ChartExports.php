@@ -21,21 +21,21 @@ class ChartExports extends CI_Controller
 
         $logoLocation = FCPATH . "assets/img/logo.png";
         $compNames   = array(
-            "loc1"    => 'Location 1',
-            "loc2"    => 'Location 2',
-            "loc3"    => 'Location 3',
-            "loc4"    => 'Location 4',
+            "loc1"    => 'Location Level 1',
+            "loc2"    => 'Location Level 2',
+            "loc3"    => 'Location Level 3',
+            "loc4"    => 'Location Level 4',
             "hcw"     => 'Healthcare Compliance',
             "cpm"     => 'Count per Moment',
             "cbm"     => 'Compliance by Moment',
-            "loc1hcw" => 'Location 1 per Healthcare Worker',
-            "loc1m"   => 'Location 1 per Moment',
-            "loc2hcw" => 'Location 2 per Healthcare Worker',
-            "loc2m"   => 'Location 2 per Moment',
-            "loc3hcw" => 'Location 3 per Healthcare Worker ',
-            "loc3m"   => 'Location 3 per Moment',
-            "loc4hcw" => 'Location 4 per Healthcare Worker',
-            "loc4m"   => 'Location 4 per Moment',
+            "loc1hcw" => 'Location Level 1 per Healthcare Worker',
+            "loc1m"   => 'Location Level 1 per Moment',
+            "loc2hcw" => 'Location Level 2 per Healthcare Worker',
+            "loc2m"   => 'Location Level 2 per Moment',
+            "loc3hcw" => 'Location Level 3 per Healthcare Worker ',
+            "loc3m"   => 'Location Level 3 per Moment',
+            "loc4hcw" => 'Location Level 4 per Healthcare Worker',
+            "loc4m"   => 'Location Level 4 per Moment',
         );
 
         $filterOptions = $this->input->get();
@@ -47,8 +47,8 @@ class ChartExports extends CI_Controller
             $percentagesOutput['values'] = count($percentagesOutput['values']) ? $percentagesOutput['values'] : array();
 
             $chunked = array();
-            $chunkedColumns = array_chunk($percentagesOutput['columns'], 10);
-            $chunkedValues = array_chunk($percentagesOutput['values'], 10);
+            $chunkedColumns = array_chunk($percentagesOutput['columns'], 5);
+            $chunkedValues = array_chunk($percentagesOutput['values'], 5);
             foreach ($chunkedValues as $key => $value) {
 
                 $dataSet = array_combine($chunkedColumns[$key], $value);
@@ -60,7 +60,6 @@ class ChartExports extends CI_Controller
                 $output = $this->svggraphhelper->generateBarGraph($dataSet, $tempChartName);
                 $this->pdf->ImageSVG('@' . $output, $x = 30, $y, $w = '200', $h = '200', '', $align = 'C', $palign = 'C', $border = 1, $fitonpage = true);
             }
-
         }
 
         $this->pdf->Output('Hand Hygiene Compliance Chart.pdf', 'D');

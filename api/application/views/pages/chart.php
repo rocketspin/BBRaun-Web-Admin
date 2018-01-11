@@ -19,13 +19,11 @@
 
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-
-
                     <div class="panel-group" v-if="showChart('loc1')">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse1">Location 1</a>
+                                    <a data-toggle="collapse" href="#collapse1">Location Level 1</a>
                                 </h4>
                             </div>
                             <div id="collapse1" class="panel-collapse collapse in">
@@ -34,8 +32,9 @@
 
                                     <div class="center-block" v-if="(chunkedChartData.loc1 === undefined || chunkedChartData.loc1.length === 0) && !loading">No Data for Charts</div>
 
-                                    <div v-if="showChart('loc1') && !loading" v-for="chunked in chunkedChartData.loc1">
+                                    <div v-if="showChart('loc1') && !loading" v-for="(chunked, index) in chunkedChartData.loc1">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 1 ({{index+1}} of {{chunkedChartData.loc1.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -56,7 +55,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse2">Location 2</a>
+                                    <a data-toggle="collapse" href="#collapse2">Location Level 2</a>
                                 </h4>
                             </div>
                             <div id="collapse2" class="panel-collapse collapse">
@@ -65,8 +64,9 @@
 
                                     <div class="center-block" v-if="(chunkedChartData.loc2 === undefined || chunkedChartData.loc2.length === 0) && !loading">No Data for Charts</div>
 
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc2">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc2">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 2 ({{index+1}} of {{chunkedChartData.loc2.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -87,15 +87,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse3">Location 3</a>
+                                    <a data-toggle="collapse" href="#collapse3">Location Level 3</a>
                                 </h4>
                             </div>
                             <div id="collapse3" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc3 === undefined || chunkedChartData.loc3.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc3">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc3">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 3 ({{index+1}} of {{chunkedChartData.loc3.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -116,15 +117,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse4">Location 4</a>
+                                    <a data-toggle="collapse" href="#collapse4">Location Level 4</a>
                                 </h4>
                             </div>
                             <div id="collapse4" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc4 === undefined || chunkedChartData.loc4.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc4">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc4">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 4 ({{index+1}} of {{chunkedChartData.loc4.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -152,8 +154,9 @@
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.hcw === undefined || chunkedChartData.hcw.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.hcw">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.hcw">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">HCW ({{index+1}} of {{chunkedChartData.hcw.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -181,8 +184,9 @@
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.cpm === undefined || chunkedChartData.cpm.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.cpm">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.cpm">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Count Per Moment ({{index+1}} of {{chunkedChartData.cpm.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -210,8 +214,9 @@
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.cbm === undefined || chunkedChartData.cbm.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.cbm">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.cbm">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Compliance By Moment ({{index+1}} of {{chunkedChartData.cbm.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -232,15 +237,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse8">Location 1 by Health Care Worker</a>
+                                    <a data-toggle="collapse" href="#collapse8">Location Level 1 by Health Care Worker</a>
                                 </h4>
                             </div>
                             <div id="collapse8" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc1hcw === undefined || chunkedChartData.loc1hcw.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc1hcw">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc1hcw">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 1 by Health Care Worker ({{index+1}} of {{chunkedChartData.loc1hcw.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -261,15 +267,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse9">Location 1 by Moment</a>
+                                    <a data-toggle="collapse" href="#collapse9">Location Level 1 by Moment</a>
                                 </h4>
                             </div>
                             <div id="collapse9" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc1m === undefined || chunkedChartData.loc1m.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc1m">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc1m">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 1 by Moment ({{index+1}} of {{chunkedChartData.loc1m.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -290,15 +297,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse10">Location 2 by Health Care Worker</a>
+                                    <a data-toggle="collapse" href="#collapse10">Location Level 2 by Health Care Worker</a>
                                 </h4>
                             </div>
                             <div id="collapse10" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc2hcw === undefined || chunkedChartData.loc2hcw.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc2hcw">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc2hcw">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 2 by Health Care Worker ({{index+1}} of {{chunkedChartData.loc2hcw.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -319,15 +327,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse11">Location 2 by Moment</a>
+                                    <a data-toggle="collapse" href="#collapse11">Location Level 2 by Moment</a>
                                 </h4>
                             </div>
                             <div id="collapse11" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc2m === undefined || chunkedChartData.loc2m.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc2m">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc2m">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 2 by Moment ({{index+1}} of {{chunkedChartData.loc2m.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -348,15 +357,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse12">Location 3 by Health Care Worker</a>
+                                    <a data-toggle="collapse" href="#collapse12">Location Level 3 by Health Care Worker</a>
                                 </h4>
                             </div>
                             <div id="collapse12" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc3hcw === undefined || chunkedChartData.loc3hcw.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc3hcw">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc3hcw">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 3 by Health Care Worker ({{index+1}} of {{chunkedChartData.loc3hcw.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -377,15 +387,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse13">Location 3 by Moment</a>
+                                    <a data-toggle="collapse" href="#collapse13">Location Level 3 by Moment</a>
                                 </h4>
                             </div>
                             <div id="collapse13" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc3m === undefined || chunkedChartData.loc3m.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc3m">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc3m">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 3 by Moment ({{index+1}} of {{chunkedChartData.loc3m.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -406,15 +417,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse14">Location 4 by Health Care Worker</a>
+                                    <a data-toggle="collapse" href="#collapse14">Location Level 4 by Health Care Worker</a>
                                 </h4>
                             </div>
                             <div id="collapse14" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc4hcw === undefined || chunkedChartData.loc4hcw.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc4hcw">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc4hcw">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 4 by Health Care Worker ({{index+1}} of {{chunkedChartData.loc4hcw.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -435,15 +447,16 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse15">Location 4 by Moment</a>
+                                    <a data-toggle="collapse" href="#collapse15">Location Level 4 by Moment</a>
                                 </h4>
                             </div>
                             <div id="collapse15" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc4m === undefined || chunkedChartData.loc4m.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc4m">
+                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc4m">
                                         <div class="col-md-6 col-sm-12 well">
+                                            <h4 class="text-center">Location Level 4 by Moment ({{index+1}} of {{chunkedChartData.loc4m.length}})</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -488,10 +501,10 @@
                                         <tr>
                                             <td>Date & Time</td>
                                             <td>Auditor</td>
-                                            <td>Location 1</td>
-                                            <td>Location 2</td>
-                                            <td>Location 3</td>
-                                            <td>Location 4</td>
+                                            <td>Location Level 1</td>
+                                            <td>Location Level 2</td>
+                                            <td>Location Level 3</td>
+                                            <td>Location Level 4</td>
                                             <td>Title</td>
                                             <td>Name</td>
                                             <td>Moment 1</td>
@@ -616,21 +629,21 @@
                             <div class="form-group">
                                 <label>Compliance Options</label><br>
                                 <select class="form-control" id="compOpt" v-model="selected.complianceOptions" multiple="multiple">
-                                    <option value="loc1">Location 1</option>
-                                    <option value="loc2">Location 2</option>
-                                    <option value="loc3">Location 3</option>
-                                    <option value="loc4">Location 4</option>
+                                    <option value="loc1">Location Level 1</option>
+                                    <option value="loc2">Location Level 2</option>
+                                    <option value="loc3">Location Level 3</option>
+                                    <option value="loc4">Location Level 4</option>
                                     <option value="hcw">Healthcare Compliance</option>
                                     <option value="cpm">Count per Moment</option>
                                     <option value="cbm">Compliance by Moment</option>
-                                    <option value="loc1hcw">Location 1 per Healthcare Worker</option>
-                                    <option value="loc1m">Location 1 per Moment </option>
-                                    <option value="loc2hcw"> Location 2 per Healthcare Worker </option>
-                                    <option value="loc2m"> Location 2 per Moment </option>
-                                    <option value="loc3hcw"> Location 3 per Healthcare Worker </option>
-                                    <option value="loc3m"> Location 3 per Moment </option>
-                                    <option value="loc4hcw"> Location 4 per Healthcare Worker </option>
-                                    <option value="loc4m"> Location 4 per Moment </option>
+                                    <option value="loc1hcw">Location Level 1 per Healthcare Worker</option>
+                                    <option value="loc1m">Location Level 1 per Moment </option>
+                                    <option value="loc2hcw"> Location Level 2 per Healthcare Worker </option>
+                                    <option value="loc2m"> Location Level 2 per Moment </option>
+                                    <option value="loc3hcw"> Location Level 3 per Healthcare Worker </option>
+                                    <option value="loc3m"> Location Level 3 per Moment </option>
+                                    <option value="loc4hcw"> Location Level 4 per Healthcare Worker </option>
+                                    <option value="loc4m"> Location Level 4 per Moment </option>
                                 </select>
                             </div>
                             <div class="form-group text-right">

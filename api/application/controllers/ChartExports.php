@@ -14,6 +14,7 @@ class ChartExports extends CI_Controller
      */
     public function exportPdf()
     {
+        set_time_limit(0); // disable timeout in php
         $this->load->library('svggraphhelper');
         $this->load->library('pdf');
         $this->load->model('Mdl_charts');
@@ -87,6 +88,7 @@ class ChartExports extends CI_Controller
      */
     public function exportExcel()
     {
+        set_time_limit(0); // disable timeout in php
         $filterOptions = $this->input->get();
         $companyId = $this->getCompanyIdOfCurrentUser();
         if ($companyId) {

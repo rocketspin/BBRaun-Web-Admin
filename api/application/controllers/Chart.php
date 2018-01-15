@@ -60,6 +60,7 @@ class Chart extends CI_Controller
      */
     public function getData()
     {
+        set_time_limit(0); // disable timeout in php
         $filterOptions = $this->input->get();
         $companyId = $this->getCompanyIdOfCurrentUser();
         if ($companyId) {

@@ -219,11 +219,19 @@
                 endDate: '0'
             }).on('changeDate', function (selected) {
                 var startDate = moment(selected.date.valueOf()).format("YYYY-MM-DD");
-                $('.to_date').datepicker('setStartDate', startDate);
+                var sixthMonth = moment(selected.date.valueOf()).add(6, 'months').format("YYYY-MM-DD");
+
+                var isAfter = moment(self.selected.endDate).isAfter(sixthMonth);
+                $('.to_date').datepicker('setStartDate', null);
+                $('.to_date').datepicker('setEndDate', sixthMonth);
                 self.selected.startDate = startDate;
+                if (isAfter) {
+                    self.selected.endDate = null;
+                }
             }).on('clearDate', function (selected) {
                 $('.to_date').datepicker('setStartDate', null);
                 self.selected.startDate = null;
+                self.selected.endDate = null;
             });
 
             $(".to_date").datepicker({
@@ -232,8 +240,15 @@
                 endDate: '0'
             }).on('changeDate', function (selected) {
                 var endDate = moment(selected.date.valueOf()).format("YYYY-MM-DD");
+                var sixthMonth = moment(selected.date.valueOf()).subtract(6, 'months').format("YYYY-MM-DD");
+
+                var isBefore = moment(self.selected.startDate).isBefore(sixthMonth);
                 $('.from_date').datepicker('setEndDate', endDate);
+                $('.from_date').datepicker('setStartDate', sixthMonth);
                 self.selected.endDate = endDate;
+                if (isBefore) {
+                    self.selected.startDate = null;
+                }
             }).on('clearDate', function (selected) {
                 $('.from_date').datepicker('setEndDate', null);
                 self.selected.setEndDate = null;
@@ -335,14 +350,6 @@
                 jQuery.get(chartUrlPrefix + '/chart/getData/', this.selected)
                     .done(function(data) {
                         self.rawData = data.rawData;
-                        // $.each(data.chart, function(index, val){
-                            // if (data.chart[index] !== null || (data.chart[index] && data.chart[index].length > 1) ) {
-                            //     self.chartData[index].datasets[0].data = data.chart[index].values;
-                            //     self.chartData[index].labels = data.chart[index].columns;
-
-                            //     self.chartData[index].dataset = data.chart[index].values;
-                            // }
-                        // });
 
                         self.chunkedChartData = data.chunkedChartData;
 

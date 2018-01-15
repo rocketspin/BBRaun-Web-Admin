@@ -335,14 +335,14 @@
                 jQuery.get(chartUrlPrefix + '/chart/getData/', this.selected)
                     .done(function(data) {
                         self.rawData = data.rawData;
-                        $.each(data.chart, function(index, val){
-                            if (data.chart[index] !== null || (data.chart[index] && data.chart[index].length > 1) ) {
-                                self.chartData[index].datasets[0].data = data.chart[index].values;
-                                self.chartData[index].labels = data.chart[index].columns;
+                        // $.each(data.chart, function(index, val){
+                            // if (data.chart[index] !== null || (data.chart[index] && data.chart[index].length > 1) ) {
+                            //     self.chartData[index].datasets[0].data = data.chart[index].values;
+                            //     self.chartData[index].labels = data.chart[index].columns;
 
-                                self.chartData[index].dataset = data.chart[index].values;
-                            }
-                        });
+                            //     self.chartData[index].dataset = data.chart[index].values;
+                            // }
+                        // });
 
                         self.chunkedChartData = data.chunkedChartData;
 

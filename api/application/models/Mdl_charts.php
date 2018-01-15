@@ -56,19 +56,23 @@ class Mdl_charts extends CI_Model
             case self::LOCATION1_BY_HCW:
                 return $this->parseByLocationHcw('location_level1', $data);
             case self::LOCATION1_PER_MOMENT:
-                return $this->parseByLocationMoment('location_level1', $data);
+                $locationName = 'location_1_name';
+                return $this->parseByLocationMoment('location_level1', $data, $locationName);
             case self::LOCATION2_BY_HCW:
                 return $this->parseByLocationHcw('location_level2', $data);
             case self::LOCATION2_PER_MOMENT:
-                return $this->parseByLocationMoment('location_level1', $data);
+                $locationName = 'location_2_name';
+                return $this->parseByLocationMoment('location_level2', $data, $locationName);
             case self::LOCATION3_BY_HCW:
                 return $this->parseByLocationHcw('location_level3', $data);
             case self::LOCATION3_PER_MOMENT:
-                return $this->parseByLocationMoment('location_level3', $data);
+                $locationName = 'location_3_name';
+                return $this->parseByLocationMoment('location_level3', $data, $locationName);
             case self::LOCATION4_BY_HCW:
                 return $this->parseByLocationHcw('location_level4', $data);
             case self::LOCATION4_PER_MOMENT:
-                return $this->parseByLocationMoment('location_level4', $data);
+                $locationName = 'location_4_name';
+                return $this->parseByLocationMoment('location_level4', $data, $locationName);
         }
     }
 
@@ -164,15 +168,15 @@ class Mdl_charts extends CI_Model
 
                 $dataSet[$key]['total']++;
 
-                if ($blnWithCompliance) {
-                    if ($datum['result'] == self::PASSED) {
+                // if ($blnWithCompliance) {
+                    if (!empty($datum[$key]) && $datum[$key]) {
                         if (!isset($dataSet[$key]['passed'])) {
                             $dataSet[$key]['passed'] = 0;
                         }
 
                         $dataSet[$key]['passed']++;
                     }
-                }
+                // }
             }
         }
 
@@ -224,7 +228,7 @@ class Mdl_charts extends CI_Model
      * @param $chartData
      * @return array
      */
-    private function parseByLocationMoment($location, $chartData)
+    private function parseByLocationMoment($location, $chartData, $locationKeyName)
     {
         $dataSet = array();
         $moments = array(
@@ -234,30 +238,54 @@ class Mdl_charts extends CI_Model
             'moment4' => 'Moment 4',
             'moment5' => 'Moment 5',
         );
-        foreach ($moments  as $key => $moment) {
-            foreach ($chartData as $datum) {
-                if (!isset($datum[$location]) || empty($datum[$location])) {
-                    continue;
+
+        foreach ($chartData as $datum) {
+            if (!isset($datum[$location]) || empty($datum[$location]) || empty($datum[$locationKeyName])) {
+                continue;
+            }
+
+            $dataSet[$datum[$location]]['label'] = $datum[$locationKeyName];
+            foreach ($moments as $key => $moment) {
+
+                $dataSet[$datum[$location]]['data'][$key]['label'] = $moment;
+                if (empty($dataSet[$datum[$location]]['data'][$key]['passed'])) {
+                    $dataSet[$datum[$location]]['data'][$key]['passed'] = 0;
                 }
 
-                $dataSet[$key]['label'] = $moment;
-                if (!isset($dataSet[$key]['total'])) {
-                    $dataSet[$key]['total'] = 0;
-                }
-
-                $dataSet[$key]['total']++;
-
-                if ($datum['result'] == self::PASSED) {
-                    if (!isset($dataSet[$key]['passed'])) {
-                        $dataSet[$key]['passed'] = 0;
-                    }
-
-                    $dataSet[$key]['passed']++;
+                if (!empty($datum[$key])) {
+                    $dataSet[$datum[$location]]['data'][$key]['passed']++;
                 }
             }
         }
 
-        return $this->generateDataSets($dataSet);
+        return $this->generateChartDataSetsForLocationMoment($dataSet);
+        // var_dump($dataSet);exit;
+        // foreach ($moments  as $key => $moment) {
+        //     foreach ($chartData as $datum) {
+        //         if (!isset($datum[$location]) || empty($datum[$location])) {
+        //             continue;
+        //         }
+
+        //         $dataSet[$key]['label'] = $datum[$location];
+        //         if (!isset($dataSet[$key]['total'])) {
+        //             $dataSet[$key]['total'] = 0;
+        //         }
+
+        //         $dataSet[$key]['total']++;
+
+        //         if (!empty($datum[$key]) && $datum[$key]) {
+        //             if (!isset($dataSet[$key]['passed'])) {
+        //                 $dataSet[$key]['passed'] = 0;
+        //             }
+
+        //             $dataSet[$key]['passed']++;
+        //         }
+        //     }
+        // }
+
+        // return $this->generateDataSets($dataSet);
+
+        // return $this->generateDataSetsForCount($dataSet);
     }
 
     /**
@@ -292,7 +320,26 @@ class Mdl_charts extends CI_Model
         );
         foreach ($dataSet as $item) {
             $data['columns'][] = $item['label'];
-            $data['values'][] = $item['total'];
+            $data['values'][] = !empty($item['passed']) ? $item['passed'] : 0;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Format location per moment values
+     *
+     * @param array $dataSet
+     * @return array
+     */
+    private function generateChartDataSetsForLocationMoment($dataSet) {
+        $data = array();
+        foreach ($dataSet as $key => $value) {
+            $data[$key]['label'] = $value['label'];
+            foreach ($value['data'] as $val) {
+                $data[$key]['columns'][] = $val['label'];
+                $data[$key]['values'][] = $val['passed'];
+            }
         }
 
         return $data;

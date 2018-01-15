@@ -187,7 +187,7 @@
                                     <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.cpm">
                                         <div class="col-md-6 col-sm-12 well">
                                             <h4 class="text-center">Count Per Moment ({{index+1}} of {{chunkedChartData.cpm.length}})</h4>
-                                            <chartjs-bar :datalabel="'Compliance'"
+                                            <chartjs-bar :datalabel="'Count'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
@@ -274,15 +274,15 @@
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc1m === undefined || chunkedChartData.loc1m.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc1m">
+                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc1m">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 1 by Moment ({{index+1}} of {{chunkedChartData.loc1m.length}})</h4>
-                                            <chartjs-bar :datalabel="'Compliance'"
+                                            <h4 class="text-center">{{chunked.label}}</h4>
+                                            <chartjs-bar :datalabel="'Count'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
                                                 :bind="true"
-                                                :option="chartConfig"
+                                                :option="chartCountConfig"
                                                 :height="250"
                                                 v-if="!loading"
                                                 ></chartjs-bar>
@@ -334,15 +334,15 @@
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc2m === undefined || chunkedChartData.loc2m.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc2m">
+                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc2m">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 2 by Moment ({{index+1}} of {{chunkedChartData.loc2m.length}})</h4>
-                                            <chartjs-bar :datalabel="'Compliance'"
+                                            <h4 class="text-center">{{chunked.label}}</h4>
+                                            <chartjs-bar :datalabel="'Count'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
                                                 :bind="true"
-                                                :option="chartConfig"
+                                                :option="chartCountConfig"
                                                 :height="250"
                                                 v-if="!loading"
                                                 ></chartjs-bar>
@@ -394,15 +394,15 @@
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc3m === undefined || chunkedChartData.loc3m.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc3m">
+                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc3m">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 3 by Moment ({{index+1}} of {{chunkedChartData.loc3m.length}})</h4>
-                                            <chartjs-bar :datalabel="'Compliance'"
+                                            <h4 class="text-center">{{chunked.label}}</h4>
+                                            <chartjs-bar :datalabel="'Count'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
                                                 :bind="true"
-                                                :option="chartConfig"
+                                                :option="chartCountConfig"
                                                 :height="250"
                                                 v-if="!loading"
                                                 ></chartjs-bar>
@@ -454,15 +454,15 @@
                                 <div class="panel-body">
                                     <div class="center-block loader" v-if="loading"></div>
                                     <div class="center-block" v-if="(chunkedChartData.loc4m === undefined || chunkedChartData.loc4m.length === 0) && !loading">No Data for Charts</div>
-                                    <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc4m">
+                                    <div v-if="!loading" v-for="chunked in chunkedChartData.loc4m">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 4 by Moment ({{index+1}} of {{chunkedChartData.loc4m.length}})</h4>
-                                            <chartjs-bar :datalabel="'Compliance'"
+                                            <h4 class="text-center">{{chunked.label}}</h4>
+                                            <chartjs-bar :datalabel="'Count'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
                                                 :bind="true"
-                                                :option="chartConfig"
+                                                :option="chartCountConfig"
                                                 :height="250"
                                                 v-if="!loading"
                                                 ></chartjs-bar>
@@ -472,7 +472,6 @@
                             </div>
                         </div>
                     </div>
-
 
                 </div>
                 <!-- /.panel-body -->

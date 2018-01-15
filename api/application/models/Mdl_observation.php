@@ -1911,11 +1911,3 @@ class Mdl_observation extends CI_Model {
         return $query->get()->result_array();
     }
 }
-
-
-
-
-
-
-
-

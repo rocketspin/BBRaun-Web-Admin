@@ -9,20 +9,23 @@ class Svggraphhelper
     protected $graph;
     protected $settings = array(
         'stroke_colour'         => '#000',
-        'axis_max_v'            => 100,
+        // 'axis_max_v'            => 100,
         'minimum_grid_spacing'  => 20,
         'pad_right'             => 20,
         'pad_left'              => 20,
         'axis_text_angle_h'     => -45,
-        'axis_font_size'        => 6,
-        'graph_title_font_size' => 15
+        'axis_font_size'        => 5
     );
 
-    public function generateBarGraph($data, $chartTitle='')
+    public function generateBarGraph($data, $chartTitle='', $subTitle = '')
     {
         $settings = $this->settings;
         if ($chartTitle) {
             $settings['graph_title'] = $chartTitle;
+        }
+
+        if ($subTitle) {
+            $settings['graph_title'] .=  "\n (" . $subTitle . ")";
         }
 
         $graph = new SVGGraph(300, 300, $settings);

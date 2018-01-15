@@ -78,14 +78,19 @@ class Chart extends CI_Controller
 
         $chunked = array();
         foreach ($response['chart'] as $complianceOption => $values) {
-            $chunkedColumns = array_chunk($values['columns'], 5);
-            $chunkedValues = array_chunk($values['values'], 5);
-            foreach ($chunkedValues as $key => $value) {
-                $chunked[$complianceOption][] = array(
-                    'values' => $value,
-                    'columns' => $chunkedColumns[$key],
-                );
+            if (!in_array($complianceOption, array('loc1m', 'loc2m', 'loc3m', 'loc4m'))) {
+                $chunkedColumns = array_chunk($values['columns'], 5);
+                $chunkedValues = array_chunk($values['values'], 5);
+                foreach ($chunkedValues as $key => $value) {
+                    $chunked[$complianceOption][] = array(
+                        'values' => $value,
+                        'columns' => $chunkedColumns[$key],
+                    );
+                }
+            } else {
+                $chunked[$complianceOption] = $values;
             }
+
         }
         $response['chunkedChartData'] = $chunked;
         $this->returnJsonResponse($response);

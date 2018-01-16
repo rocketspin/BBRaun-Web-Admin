@@ -277,7 +277,7 @@
                                     <div v-if="!loading" v-for="chunked in chunkedChartData.loc1m">
                                         <div class="col-md-6 col-sm-12 well">
                                             <h4 class="text-center">{{chunked.label}}</h4>
-                                            <chartjs-bar :datalabel="'Percentage'"
+                                            <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
@@ -337,7 +337,7 @@
                                     <div v-if="!loading" v-for="chunked in chunkedChartData.loc2m">
                                         <div class="col-md-6 col-sm-12 well">
                                             <h4 class="text-center">{{chunked.label}}</h4>
-                                            <chartjs-bar :datalabel="'Percentage'"
+                                            <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
@@ -397,7 +397,7 @@
                                     <div v-if="!loading" v-for="chunked in chunkedChartData.loc3m">
                                         <div class="col-md-6 col-sm-12 well">
                                             <h4 class="text-center">{{chunked.label}}</h4>
-                                            <chartjs-bar :datalabel="'Percentage'"
+                                            <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
@@ -457,7 +457,7 @@
                                     <div v-if="!loading" v-for="chunked in chunkedChartData.loc4m">
                                         <div class="col-md-6 col-sm-12 well">
                                             <h4 class="text-center">{{chunked.label}}</h4>
-                                            <chartjs-bar :datalabel="'Percentage'"
+                                            <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"

@@ -226,6 +226,7 @@
                 $('.to_date').datepicker('setEndDate', sixthMonth);
                 self.selected.startDate = startDate;
                 if (isAfter) {
+                    alert('Maximum date range allowed is only 6 months. Please select a valid end date.');
                     self.selected.endDate = null;
                 }
             }).on('clearDate', function (selected) {
@@ -247,6 +248,7 @@
                 $('.from_date').datepicker('setStartDate', sixthMonth);
                 self.selected.endDate = endDate;
                 if (isBefore) {
+                    alert('Maximum date range allowed is only 6 months. Please select a valid start date.');
                     self.selected.startDate = null;
                 }
             }).on('clearDate', function (selected) {

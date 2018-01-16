@@ -277,12 +277,12 @@
                                     <div v-if="!loading" v-for="chunked in chunkedChartData.loc1m">
                                         <div class="col-md-6 col-sm-12 well">
                                             <h4 class="text-center">{{chunked.label}}</h4>
-                                            <chartjs-bar :datalabel="'Count'"
+                                            <chartjs-bar :datalabel="'Percentage'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
                                                 :bind="true"
-                                                :option="chartCountConfig"
+                                                :option="chartConfig"
                                                 :height="250"
                                                 v-if="!loading"
                                                 ></chartjs-bar>
@@ -337,12 +337,12 @@
                                     <div v-if="!loading" v-for="chunked in chunkedChartData.loc2m">
                                         <div class="col-md-6 col-sm-12 well">
                                             <h4 class="text-center">{{chunked.label}}</h4>
-                                            <chartjs-bar :datalabel="'Count'"
+                                            <chartjs-bar :datalabel="'Percentage'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
                                                 :bind="true"
-                                                :option="chartCountConfig"
+                                                :option="chartConfig"
                                                 :height="250"
                                                 v-if="!loading"
                                                 ></chartjs-bar>
@@ -397,12 +397,12 @@
                                     <div v-if="!loading" v-for="chunked in chunkedChartData.loc3m">
                                         <div class="col-md-6 col-sm-12 well">
                                             <h4 class="text-center">{{chunked.label}}</h4>
-                                            <chartjs-bar :datalabel="'Count'"
+                                            <chartjs-bar :datalabel="'Percentage'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
                                                 :bind="true"
-                                                :option="chartCountConfig"
+                                                :option="chartConfig"
                                                 :height="250"
                                                 v-if="!loading"
                                                 ></chartjs-bar>
@@ -457,12 +457,12 @@
                                     <div v-if="!loading" v-for="chunked in chunkedChartData.loc4m">
                                         <div class="col-md-6 col-sm-12 well">
                                             <h4 class="text-center">{{chunked.label}}</h4>
-                                            <chartjs-bar :datalabel="'Count'"
+                                            <chartjs-bar :datalabel="'Percentage'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
                                                 :data="chunked.values"
                                                 :bind="true"
-                                                :option="chartCountConfig"
+                                                :option="chartConfig"
                                                 :height="250"
                                                 v-if="!loading"
                                                 ></chartjs-bar>

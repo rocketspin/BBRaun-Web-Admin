@@ -167,16 +167,13 @@ class Mdl_charts extends CI_Model
                 }
 
                 $dataSet[$key]['total']++;
+                if (!isset($dataSet[$key]['passed'])) {
+                    $dataSet[$key]['passed'] = 0;
+                }
 
-                // if ($blnWithCompliance) {
-                    if (!empty($datum[$key]) && $datum[$key]) {
-                        if (!isset($dataSet[$key]['passed'])) {
-                            $dataSet[$key]['passed'] = 0;
-                        }
-
-                        $dataSet[$key]['passed']++;
-                    }
-                // }
+                if ($datum['result'] == self::PASSED) {
+                    $dataSet[$key]['passed']++;
+                }
             }
         }
 

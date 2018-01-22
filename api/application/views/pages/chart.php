@@ -34,7 +34,7 @@
 
                                     <div v-if="showChart('loc1') && !loading" v-for="(chunked, index) in chunkedChartData.loc1">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 1 ({{index+1}} of {{chunkedChartData.loc1.length}})</h4>
+                                            <h4 class="text-center">Location Level 1 <span v-if="chunkedChartData.loc1.length > 1">({{index+1}} of {{chunkedChartData.loc1.length}})</span> </h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -66,7 +66,7 @@
 
                                     <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc2">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 2 ({{index+1}} of {{chunkedChartData.loc2.length}})</h4>
+                                            <h4 class="text-center">Location Level 2 <span v-if="chunkedChartData.loc2.length > 1">({{index+1}} of {{chunkedChartData.loc2.length}})</span> </h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -96,7 +96,7 @@
                                     <div class="center-block" v-if="(chunkedChartData.loc3 === undefined || chunkedChartData.loc3.length === 0) && !loading">No Data for Charts</div>
                                     <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc3">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 3 ({{index+1}} of {{chunkedChartData.loc3.length}})</h4>
+                                            <h4 class="text-center">Location Level 3 <span v-if="chunkedChartData.loc3.length > 1">({{index+1}} of {{chunkedChartData.loc3.length}})</span> </h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -126,7 +126,7 @@
                                     <div class="center-block" v-if="(chunkedChartData.loc4 === undefined || chunkedChartData.loc4.length === 0) && !loading">No Data for Charts</div>
                                     <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc4">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 4 ({{index+1}} of {{chunkedChartData.loc4.length}})</h4>
+                                            <h4 class="text-center">Location Level 4 <span v-if="chunkedChartData.loc4.length > 1">({{index+1}} of {{chunkedChartData.loc4.length}})</span></h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -156,7 +156,7 @@
                                     <div class="center-block" v-if="(chunkedChartData.hcw === undefined || chunkedChartData.hcw.length === 0) && !loading">No Data for Charts</div>
                                     <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.hcw">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">HCW ({{index+1}} of {{chunkedChartData.hcw.length}})</h4>
+                                            <h4 class="text-center">HCW <span v-if="chunkedChartData.hcw.length > 1">({{index+1}} of {{chunkedChartData.hcw.length}})</span></h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -186,7 +186,7 @@
                                     <div class="center-block" v-if="(chunkedChartData.cpm === undefined || chunkedChartData.cpm.length === 0) && !loading">No Data for Charts</div>
                                     <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.cpm">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Count Per Moment ({{index+1}} of {{chunkedChartData.cpm.length}})</h4>
+                                            <h4 class="text-center">Count Per Moment</h4>
                                             <chartjs-bar :datalabel="'Count'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -216,7 +216,7 @@
                                     <div class="center-block" v-if="(chunkedChartData.cbm === undefined || chunkedChartData.cbm.length === 0) && !loading">No Data for Charts</div>
                                     <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.cbm">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Compliance By Moment ({{index+1}} of {{chunkedChartData.cbm.length}})</h4>
+                                            <h4 class="text-center">Compliance By Moment</h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -246,7 +246,7 @@
                                     <div class="center-block" v-if="(chunkedChartData.loc1hcw === undefined || chunkedChartData.loc1hcw.length === 0) && !loading">No Data for Charts</div>
                                     <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc1hcw">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 1 by Health Care Worker ({{index+1}} of {{chunkedChartData.loc1hcw.length}})</h4>
+                                            <h4 class="text-center">Location Level 1 by Health Care Worker <span v-if="chunkedChartData.loc1hcw.length > 1">({{index+1}} of {{chunkedChartData.loc1hcw.length}})</span></h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -306,7 +306,7 @@
                                     <div class="center-block" v-if="(chunkedChartData.loc2hcw === undefined || chunkedChartData.loc2hcw.length === 0) && !loading">No Data for Charts</div>
                                     <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc2hcw">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 2 by Health Care Worker ({{index+1}} of {{chunkedChartData.loc2hcw.length}})</h4>
+                                            <h4 class="text-center">Location Level 2 by Health Care Worker <span v-if="chunkedChartData.loc2hcw.length > 1">({{index+1}} of {{chunkedChartData.loc2hcw.length}})</span></h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -366,7 +366,7 @@
                                     <div class="center-block" v-if="(chunkedChartData.loc3hcw === undefined || chunkedChartData.loc3hcw.length === 0) && !loading">No Data for Charts</div>
                                     <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc3hcw">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 3 by Health Care Worker ({{index+1}} of {{chunkedChartData.loc3hcw.length}})</h4>
+                                            <h4 class="text-center">Location Level 3 by Health Care Worker <span v-if="chunkedChartData.loc3hcw.length > 1">({{index+1}} of {{chunkedChartData.loc3hcw.length}})</span></h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
@@ -426,7 +426,7 @@
                                     <div class="center-block" v-if="(chunkedChartData.loc4hcw === undefined || chunkedChartData.loc4hcw.length === 0) && !loading">No Data for Charts</div>
                                     <div v-if="!loading" v-for="(chunked, index) in chunkedChartData.loc4hcw">
                                         <div class="col-md-6 col-sm-12 well">
-                                            <h4 class="text-center">Location Level 4 by Health Care Worker ({{index+1}} of {{chunkedChartData.loc4hcw.length}})</h4>
+                                            <h4 class="text-center">Location Level 4 by Health Care Worker <span v-if="chunkedChartData.loc4hcw.length > 1">({{index+1}} of {{chunkedChartData.loc4hcw.length}})</span></h4>
                                             <chartjs-bar :datalabel="'Compliance'"
                                                 :backgroundcolor="'#00B582'"
                                                 :labels="chunked.columns"
